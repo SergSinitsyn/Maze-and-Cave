@@ -19,8 +19,8 @@ void MazeWidget::set_enable_path(bool enable) {
 
 void MazeWidget::LoadMaze(MazeMatrix& maze) {
   path_.clear();
-  set_rows(maze.row());
-  set_cols(maze.col());
+  set_rows(maze.rows());
+  set_cols(maze.cols());
   maze_.clear();
   for (size_t row = 0; row < rows_; ++row) {
     for (size_t col = 0; col < cols_; ++col) {
