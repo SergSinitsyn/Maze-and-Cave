@@ -22,6 +22,8 @@ class Maze {
   std::vector<Cell> FindPath(Cell start, Cell end);
 
  private:
+  //! Эти константы нужны во многих местах - и в пещерах и во вью - надо их
+  //! куда-то вынести
   const size_t kMinCol = 2;
   const size_t kMinRow = 2;
   const size_t kMaxCol = 50;
@@ -32,9 +34,8 @@ class Maze {
   void CopyPrewRow(size_t row);
   size_t CountSetNumberNotBottomWall(size_t curr_row, size_t curr_set_num);
   void MakeLastRow();
-  std::vector<Cell> MakePathVector(
-      std::vector<std::vector<Cell>>& prev, Cell start,
-      Cell end);
+  std::vector<Cell> MakePathVector(std::vector<std::vector<Cell>>& prev,
+                                   Cell start, Cell end);
   bool RandomBool();
   void ReadMatrixLine(size_t& line_number, const std::string& line);
   void ReadSize(const std::string& line);

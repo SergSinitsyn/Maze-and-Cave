@@ -1,10 +1,7 @@
 #include "cave.h"
 
-Cave::Cave() {
-  //! TODO initalize board
-  rows_ = board_.size();
-  cols_ = board_[0].size();
-};
+#include <fstream>
+#include <tuple>
 
 int Cave::CountLiveNeighbors(int row, int col) {
   int live_neighbors = 0;
@@ -15,7 +12,8 @@ int Cave::CountLiveNeighbors(int row, int col) {
       int ni = row + dx;
       int nj = col + dy;
 
-      if (ni >= 0 && ni < rows_ && nj >= 0 && nj < cols_ && board_[ni][nj]) {
+      if (ni >= 0 && ni < rows_ && nj >= 0 && nj < cols_ &&
+          board_[ni][nj].life()) {
         live_neighbors++;
       }
     }
@@ -24,19 +22,20 @@ int Cave::CountLiveNeighbors(int row, int col) {
 }
 
 void Cave::MakeOneTurn() {
-  std::vector<std::vector<int>> new_board(rows_, std::vector<int>(cols_, 0));
+  std::vector<std::vector<CaveCell>> new_board(rows_,
+                                               std::vector<CaveCell>(cols_));
 
   for (int i = 0; i < rows_; ++i) {
     for (int j = 0; j < cols_; ++j) {
       int live_neighbors = CountLiveNeighbors(i, j);
       // Apply the rules of the game
-      if (board_[i][j]) {
+      if (board_[i][j].life()) {
         if (live_neighbors < dead_treshold_) {
-          new_board[i][j] = 0;  // Cell become dead
+          new_board[i][j].SetUp(i, j, false);  // Cell become dead
         }
       } else {
         if (live_neighbors > live_treshold_) {
-          new_board[i][j] = 1;  // Cell is born
+          new_board[i][j].SetUp(i, j, true);  // Cell is born
         }
       }
     }
@@ -44,4 +43,15 @@ void Cave::MakeOneTurn() {
 
   // Update the original board
   board_ = new_board;
+}
+
+void Cave::ReadLine(size_t& line_number, const std::string& line) {
+  size_t num_size = 0;
+  size_t line_index = 0;
+  for (size_t col_index = 0; col_index < cols_; ++col_index) {
+    bool life = std::stoi(&line.at(line_index), &num_size);
+    board_[line_number][col_index].SetUp(line_number, col_index,
+                                         !life);  //! 1 is dead cell in file
+    line_index += num_size;
+  }
 }

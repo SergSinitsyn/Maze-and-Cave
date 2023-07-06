@@ -4,7 +4,8 @@
 #include <cstring>
 #include <iostream>
 
-constexpr size_t kMinDimensions = 2;
+constexpr size_t kMinDimensions =
+    2;  //! глобальная константа - лучше положить ее в класс
 
 MazeMatrix::MazeMatrix() : MazeMatrix(kMinDimensions, kMinDimensions) {}
 

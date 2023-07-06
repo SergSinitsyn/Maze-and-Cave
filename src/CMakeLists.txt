@@ -32,6 +32,7 @@ set(PROJECT_SOURCES
         controller/controller.cc
         controller/controller.h
 
+        model/model.h model/model.cc
         model/maze/maze.h model/maze/maze.cc
         model/cave/cave.h model/cave/cave.cc model/maze/maze_gen.cc
 

@@ -28,6 +28,7 @@ size_t Maze::rows() const { return rows_; }
 
 size_t Maze::cols() const { return cols_; }
 
+//! Дублируется с Саве
 void Maze::ReadFile(const std::string& filename) {
   ClearMatrix();
   std::ifstream file(filename);
@@ -89,6 +90,7 @@ void Maze::ReadMatrixLine(size_t& line_number, const std::string& line) {
   }
 }
 
+//! Дублируется с Саве
 void Maze::ReadSize(const std::string& line) {
   size_t pos = 0;
   size_t rows = std::stoi(&line.at(pos), &pos);
