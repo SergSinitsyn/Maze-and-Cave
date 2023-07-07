@@ -82,7 +82,7 @@
          <enum>QTabWidget::Triangular</enum>
         </property>
         <property name="currentIndex">
-         <number>0</number>
+         <number>1</number>
         </property>
         <property name="elideMode">
          <enum>Qt::ElideRight</enum>
@@ -520,7 +520,7 @@
      <x>0</x>
      <y>0</y>
      <width>764</width>
-     <height>22</height>
+     <height>24</height>
     </rect>
    </property>
   </widget>
@@ -539,6 +539,21 @@
    <container>1</container>
   </customwidget>
  </customwidgets>
+ <tabstops>
+  <tabstop>tabWidget_controls</tabstop>
+  <tabstop>pushButton_load_maze_file</tabstop>
+  <tabstop>spinBox_cols</tabstop>
+  <tabstop>spinBox_rows</tabstop>
+  <tabstop>pushButton_generate</tabstop>
+  <tabstop>pushButton_path</tabstop>
+  <tabstop>pushButton_save_maze</tabstop>
+  <tabstop>pushButton_load_cave_file</tabstop>
+  <tabstop>spinBox_birth_limit</tabstop>
+  <tabstop>spinBox_death_limit</tabstop>
+  <tabstop>pushButton_next_step</tabstop>
+  <tabstop>spinBox_periodicity</tabstop>
+  <tabstop>pushButton_automatic_work</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>
