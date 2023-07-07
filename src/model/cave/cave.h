@@ -9,13 +9,14 @@
 using CaveMatrix = std::vector<std::vector<CaveCell>>;
 class Cave : public Model {
  public:
-  Cave(){};
-  Cave(size_t rows, size_t cols) : Model(rows, cols){};
+  // Cave(){};
+  Cave(size_t rows, size_t cols, int density = 50);
   CaveMatrix const& GetMatrix() const { return board_; };
   void MakeOneTurn();
 
  protected:
   void ReadLine(size_t& line_number, const std::string& line) override;
+  void SetSize(std::pair<size_t, size_t> size) override;
   int CountLiveNeighbors(int row, int col);
 
   CaveMatrix board_;

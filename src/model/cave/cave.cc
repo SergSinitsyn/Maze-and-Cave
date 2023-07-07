@@ -1,7 +1,18 @@
 #include "cave.h"
 
 #include <fstream>
+#include <random>
 #include <tuple>
+
+Cave::Cave(size_t rows, size_t cols, int density) : Model(rows, cols) {
+  srand((unsigned)time(NULL));
+  SetSize({rows, cols});
+  for (int i = 0; i < rows_; ++i) {
+    for (int j = 0; j < cols_; ++j) {
+      board_[i][j].SetUp(i, j, (rand() % 100) < density);
+    }
+  }
+}
 
 int Cave::CountLiveNeighbors(int row, int col) {
   int live_neighbors = 0;
@@ -43,6 +54,11 @@ void Cave::MakeOneTurn() {
   // Update the original board
   board_ = new_board;
 }
+
+void Cave::SetSize(std::pair<size_t, size_t> size) {
+  Model::SetSize(size);
+  board_.resize(rows_, std::vector<CaveCell>(cols_));
+};
 
 void Cave::ReadLine(size_t& line_number, const std::string& line) {
   size_t num_size = 0;
