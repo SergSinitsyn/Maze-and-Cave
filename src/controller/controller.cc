@@ -39,10 +39,13 @@ void Controller::FindPath(Cell start_cell, Cell end_cell) {
 }
 
 void Controller::LoadCaveFile(const std::string &file_name) {
-  // model_cave_->ReadFile(file_name);
-
+  model_cave_->ReadFile(file_name);
+  view_->LoadCaveFromModel(model_cave_->GetMatrix());
 }
 
 void Controller::CaveNextStep(int birth, int death) {
-  //
+  model_cave_->MakeOneTurn();
+  // TODO удалить верхнее, оставить нижнее
+  //  model_cave_->MakeOneTurn(birth, death);
+  view_->LoadCaveFromModel(model_cave_->GetMatrix());
 }

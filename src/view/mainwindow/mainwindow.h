@@ -5,6 +5,8 @@
 #include <QTimer>
 
 #include "../../other/maze_matrix.h"
+#include "../../other/cave_matrix.h"
+
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -24,8 +26,7 @@ class MainWindow : public QMainWindow {
   void LoadMazeFromModel(MazeMatrix &maze);
   void SetPath(std::vector<Cell> path);
 
-  // когда пещеры будут готовы
-  void LoadCaveFromModel(MazeMatrix &cave);
+  void LoadCaveFromModel(const CaveMatrix &cave);
   void NextStepCave();
 
  private slots:
@@ -35,22 +36,17 @@ class MainWindow : public QMainWindow {
   void on_pushButton_load_maze_file_clicked();
   void on_pushButton_generate_clicked();
   void on_pushButton_save_maze_clicked();
+  void on_pushButton_path_clicked(bool checked);
 
   // cave
   void on_pushButton_load_cave_file_clicked();
   void on_pushButton_next_step_clicked();
-
-  void on_pushButton_path_clicked(bool checked);
-
   void on_pushButton_automatic_work_clicked(bool checked);
-
   void BlockControls(bool status);
 
  private:
-  Ui::MainWindow *ui;
+  Ui::MainWindow *ui;  // TODO to google style
   Controller *controller_;
-
-  QTimer *timer = new QTimer(this);
-  int time_{0};
+  QTimer *timer_ = new QTimer(this);
 };
 #endif  // MAINWINDOW_H

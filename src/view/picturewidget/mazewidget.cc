@@ -32,7 +32,7 @@ void MazeWidget::LoadMaze(MazeMatrix& maze) {
   update();
 }
 
-void MazeWidget::SetPath(std::vector<Cell> path) {
+void MazeWidget::SetPath(const std::vector<Cell> &path) {
   path_ = path;
   path_points_.clear();
   std::transform(path_.begin(), path_.end(), std::back_inserter(path_points_),
@@ -88,7 +88,7 @@ void MazeWidget::PaintWalls() {
   }
 }
 
-void MazeWidget::PaintMazeCell(MazeCell& cell) {
+void MazeWidget::PaintMazeCell(const MazeCell& cell) {
   painter_.setPen(wall_line_);
   if (cell.bottom_wall())
     painter_.drawLine(LeftBottomCorner(cell), RightBottomCorner(cell));

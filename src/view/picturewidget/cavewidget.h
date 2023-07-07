@@ -6,12 +6,10 @@
 #include <QtWidgets>
 #include <vector>
 
+#include "../../other/cave_matrix.h"
 #include "../../other/cavecell.h"
 #include "../../other/cell.h"
-#include "../../other/maze_matrix.h"  // TODO заменить на cavematrix
 #include "picturewidget.h"
-
-using CaveMatrix = std::vector<std::vector<CaveCell>>;
 
 class CaveWidget : public PictureWidget {
   Q_OBJECT
@@ -25,7 +23,7 @@ class CaveWidget : public PictureWidget {
     wall_line_.setWidth(2);
   }
 
-  void LoadCave(MazeMatrix& maze);  // TODO заменить на cavematrix
+  void LoadCave(const CaveMatrix& caze);
 
  protected:
   void paintEvent(QPaintEvent* event) override;
@@ -33,9 +31,8 @@ class CaveWidget : public PictureWidget {
  private:
   void CheckTheme();
   void PaintCave();
-  void PaintCaveCell(CaveCell& cell);
+  void PaintCaveCell(const CaveCell& cell);
 
-  //  std::vector<MazeCell> cave_;
   CaveMatrix cave_;
   QPen wall_line_;
   QColor cave_color_;

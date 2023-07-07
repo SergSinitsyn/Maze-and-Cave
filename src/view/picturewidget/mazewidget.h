@@ -33,7 +33,7 @@ class MazeWidget : public PictureWidget {
 
   void set_enable_path(bool enable);
   void LoadMaze(MazeMatrix& maze);
-  void SetPath(std::vector<Cell> path);
+  void SetPath(const std::vector<Cell> &path);
 
  signals:
   void UpdateStartAndEndCell(Cell start_cell, Cell end_cell);
@@ -48,7 +48,7 @@ class MazeWidget : public PictureWidget {
   void PaintMaze();
   void PaintFrame();
   void PaintWalls();
-  void PaintMazeCell(MazeCell& cell);
+  void PaintMazeCell(const MazeCell& cell);
   void PaintPath();
   void PaintStartAndEnd();
   void DefaultStartAndEnd();
