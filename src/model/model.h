@@ -18,6 +18,8 @@ class Model {
 
  protected:
   virtual void ReadLine(size_t& line_number, const std::string& line) {
+    (void)line_number;  // Unused parameter warning remove
+    (void)line;         // Unused parameter warning remove
     throw std::runtime_error("Not Implemented");
   };
   virtual void SetSize(std::pair<size_t, size_t> size) {

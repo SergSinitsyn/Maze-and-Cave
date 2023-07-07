@@ -20,7 +20,7 @@ endif
 
 NAME					= maze
 
-SRC_DIR					= ./model/maze
+SRC_DIR					= ./model/
 SOURCE_FILES			= *.cc
 
 TEST_FILE				= $(NAME)_test
@@ -30,7 +30,7 @@ TEST_FILE_FOR_LEAKS		= $(NAME)_test_for_leaks
 TEST_DIR				= ./tests
 TEST_SOURCE_FILE		= $(TEST_FILE).cc
 
-SOURCE					= $(SRC_DIR)/$(SOURCE_FILES) 
+SOURCE					= $(SRC_DIR)/$(SOURCE_FILES) $(SRC_DIR)/maze/$(SOURCE_FILES)
 TEST 					= $(TEST_DIR)/$(TEST_SOURCE_FILE)
 OTHER					= ./other/*.cc
 
