@@ -309,6 +309,9 @@
             </item>
             <item row="0" column="1">
              <widget class="QSpinBox" name="spinBox_birth_limit">
+              <property name="enabled">
+               <bool>false</bool>
+              </property>
               <property name="sizePolicy">
                <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
                 <horstretch>0</horstretch>
@@ -335,6 +338,9 @@
             </item>
             <item row="1" column="1">
              <widget class="QSpinBox" name="spinBox_death_limit">
+              <property name="enabled">
+               <bool>false</bool>
+              </property>
               <property name="sizePolicy">
                <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
                 <horstretch>0</horstretch>
@@ -384,6 +390,9 @@
           </item>
           <item>
            <widget class="QPushButton" name="pushButton_next_step">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
             <property name="text">
              <string>Next Step</string>
             </property>
@@ -443,6 +452,9 @@
             </item>
             <item>
              <widget class="QSpinBox" name="spinBox_periodicity">
+              <property name="enabled">
+               <bool>false</bool>
+              </property>
               <property name="accelerated">
                <bool>true</bool>
               </property>
@@ -468,6 +480,9 @@
           </item>
           <item>
            <widget class="QPushButton" name="pushButton_automatic_work">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
             <property name="text">
              <string>Automatic Work</string>
             </property>
@@ -520,7 +535,7 @@
      <x>0</x>
      <y>0</y>
      <width>764</width>
-     <height>22</height>
+     <height>24</height>
     </rect>
    </property>
   </widget>
@@ -539,6 +554,21 @@
    <container>1</container>
   </customwidget>
  </customwidgets>
+ <tabstops>
+  <tabstop>tabWidget_controls</tabstop>
+  <tabstop>pushButton_load_maze_file</tabstop>
+  <tabstop>spinBox_cols</tabstop>
+  <tabstop>spinBox_rows</tabstop>
+  <tabstop>pushButton_generate</tabstop>
+  <tabstop>pushButton_path</tabstop>
+  <tabstop>pushButton_save_maze</tabstop>
+  <tabstop>pushButton_load_cave_file</tabstop>
+  <tabstop>spinBox_birth_limit</tabstop>
+  <tabstop>spinBox_death_limit</tabstop>
+  <tabstop>pushButton_next_step</tabstop>
+  <tabstop>spinBox_periodicity</tabstop>
+  <tabstop>pushButton_automatic_work</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>

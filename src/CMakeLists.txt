@@ -37,6 +37,7 @@ set(PROJECT_SOURCES
         model/cave/cave.h model/cave/cave.cc model/maze/maze_gen.cc
 
         other/maze_matrix.h
+        other/cave_matrix.h
         other/maze_matrix.cc
 
         other/cell.h

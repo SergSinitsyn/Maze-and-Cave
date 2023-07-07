@@ -4,14 +4,11 @@
 #include <QColor>
 #include <QPainter>
 #include <QtWidgets>
-#include <vector>
 
+#include "../../other/cave_matrix.h"
 #include "../../other/cavecell.h"
 #include "../../other/cell.h"
-#include "../../other/maze_matrix.h"  // TODO заменить на cavematrix
 #include "picturewidget.h"
-
-using CaveMatrix = std::vector<std::vector<CaveCell>>;
 
 class CaveWidget : public PictureWidget {
   Q_OBJECT
@@ -19,27 +16,22 @@ class CaveWidget : public PictureWidget {
   CaveWidget(QWidget* parent = nullptr)
       : PictureWidget(parent),
         // TODO to google-style constructor
-        wall_line_(Qt::black),
-        cave_color_(Qt::black),
-        palette_(QGuiApplication::palette()) {
-    wall_line_.setWidth(2);
+        cave_color_(Qt::blue) {
+    SetTheme();
   }
 
-  void LoadCave(MazeMatrix& maze);  // TODO заменить на cavematrix
-
- protected:
-  void paintEvent(QPaintEvent* event) override;
+  void LoadCave(const CaveMatrix& caze);
 
  private:
-  void CheckTheme();
+  void PaintPicture() override;
+  void DarkTheme() override;
+  void LightTheme() override;
   void PaintCave();
-  void PaintCaveCell(CaveCell& cell);
+  void PaintCaveCell(const CaveCell& cell);
 
-  //  std::vector<MazeCell> cave_;
-  CaveMatrix cave_;
-  QPen wall_line_;
+  const CaveMatrix* cave_{nullptr};
   QColor cave_color_;
-  QPalette palette_;
+  bool cave_load_{false};
 };
 
 #endif  //  MAZE_VIEW_PICTUREWIDGET_CAVEWIDGET_H_

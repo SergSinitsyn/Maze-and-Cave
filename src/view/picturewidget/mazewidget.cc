@@ -32,19 +32,13 @@ void MazeWidget::LoadMaze(MazeMatrix& maze) {
   update();
 }
 
-void MazeWidget::SetPath(std::vector<Cell> path) {
+void MazeWidget::SetPath(const std::vector<Cell> &path) {
   path_ = path;
   path_points_.clear();
   std::transform(path_.begin(), path_.end(), std::back_inserter(path_points_),
                  [this](const auto& cell) { return Center(cell); });
 }
 
-void MazeWidget::paintEvent(QPaintEvent* event) {
-  //  TODO сделать паттерн стратегия
-  painter_.begin(this);
-  PaintMaze();
-  painter_.end();
-}
 
 void MazeWidget::mousePressEvent(QMouseEvent* event) {
   UpdateStartAndEnd(event);
@@ -54,16 +48,16 @@ void MazeWidget::mouseMoveEvent(QMouseEvent* event) {
   UpdateStartAndEnd(event);
 }
 
-void MazeWidget::CheckTheme() {
-  if (palette_ == QGuiApplication::palette()) {
-    return;
-  }
-  palette_ = QGuiApplication::palette();
-  if (palette_.color(QPalette::Window).lightness() < 128) {
-    wall_line_.setColor(Qt::white);
-  } else {
-    wall_line_.setColor(Qt::black);
-  }
+void MazeWidget::PaintPicture() {
+  PaintMaze();
+}
+
+void MazeWidget::DarkTheme() {
+  wall_line_.setColor(Qt::white);
+}
+
+void MazeWidget::LightTheme() {
+  wall_line_.setColor(Qt::black);
 }
 
 void MazeWidget::PaintMaze() {
@@ -88,7 +82,7 @@ void MazeWidget::PaintWalls() {
   }
 }
 
-void MazeWidget::PaintMazeCell(MazeCell& cell) {
+void MazeWidget::PaintMazeCell(const MazeCell& cell) {
   painter_.setPen(wall_line_);
   if (cell.bottom_wall())
     painter_.drawLine(LeftBottomCorner(cell), RightBottomCorner(cell));

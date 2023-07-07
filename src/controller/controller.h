@@ -5,8 +5,6 @@
 #include "../model/maze/maze.h"
 #include "../view/mainwindow/mainwindow.h"
 
-#include "../other/cavecell.h" // !
-
 template <typename T>
 class Singleton {
  public:
@@ -24,8 +22,6 @@ class Singleton {
   Singleton& operator=(const Singleton&) = delete;
 };
 
-using CaveMatrix = std::vector<std::vector<CaveCell>>;
-
 class Controller : public Singleton<Controller> {
  public:
   friend class Singleton<Controller>;
@@ -36,15 +32,14 @@ class Controller : public Singleton<Controller> {
 
   void LoadMazeFile(const std::string& file_name);
   void GenerateMaze(int rows, int cols);
-  void SaveMazeToFile(const std::string &file_name);
-  void FindPath (Cell start_cell, Cell end_cell);
+  void SaveMazeToFile(const std::string& file_name);
+  void FindPath(Cell start_cell, Cell end_cell);
 
   void LoadCaveFile(const std::string& file_name);
   void CaveNextStep(int birth, int death);
 
  private:
   Controller() = default;
-  // Model* model_{nullptr}; // delete
   Maze* model_maze_{nullptr};
   Cave* model_cave_{nullptr};
   MainWindow* view_{nullptr};
