@@ -22,7 +22,7 @@ class Model {
   };
   virtual void SetSize(std::pair<size_t, size_t> size) {
     std::tie(rows_, cols_) = size;
-    lines_to_read_ = rows_ * 2;
+    lines_to_read_ = rows_;
   };
   size_t rows_ = 0;
   size_t cols_ = 0;

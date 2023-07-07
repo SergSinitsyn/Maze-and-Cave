@@ -29,7 +29,7 @@ size_t Maze::rows() const { return rows_; }
 size_t Maze::cols() const { return cols_; }
 
 //! Дублируется с Саве
-void Maze::ReadFile(const std::string& filename) {
+/*void Maze::ReadFile(const std::string& filename) {
   ClearMatrix();
   std::ifstream file(filename);
   if (!file) {
@@ -44,13 +44,13 @@ void Maze::ReadFile(const std::string& filename) {
   for (size_t i = 0; i < rows_ * 2; ++i) {
     std::getline(file, line);
     if (!line.empty()) {
-      ReadMatrixLine(i, line);
+      ReadLine(i, line);
     } else {
       --i;
     }
   }
   file.close();
-}
+}*/
 
 void Maze::WriteFile(const std::string& filename) {
   std::ofstream file(filename);
@@ -76,7 +76,13 @@ void Maze::WriteFile(const std::string& filename) {
 
 void Maze::ClearMatrix() { maze_matrix_.ClearMatrix(); }
 
-void Maze::ReadMatrixLine(size_t& line_number, const std::string& line) {
+void Maze::SetSize(std::pair<size_t, size_t> size) {
+  std::tie(rows_, cols_) = size;
+  lines_to_read_ = rows_ * 2;
+  maze_matrix_ = MazeMatrix(rows_, cols_);
+};
+
+void Maze::ReadLine(size_t& line_number, const std::string& line) {
   size_t num_size = 0;
   size_t line_index = 0;
   for (size_t col_index = 0; col_index < cols_; ++col_index) {
@@ -91,7 +97,7 @@ void Maze::ReadMatrixLine(size_t& line_number, const std::string& line) {
 }
 
 //! Дублируется с Саве
-void Maze::ReadSize(const std::string& line) {
+/*void Maze::ReadSize(const std::string& line) {
   size_t pos = 0;
   size_t rows = std::stoi(&line.at(pos), &pos);
   size_t cols = std::stoi(&line.at(pos));
@@ -102,7 +108,7 @@ void Maze::ReadSize(const std::string& line) {
   maze_matrix_ = MazeMatrix(rows, cols);
   rows_ = rows;
   cols_ = cols;
-}
+}*/
 
 std::vector<Cell> Maze::MakePathVector(std::vector<std::vector<Cell>>& prev,
                                        Cell start, Cell end) {

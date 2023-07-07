@@ -14,10 +14,6 @@ class Cave : public Model {
 
  protected:
   void ReadLine(size_t& line_number, const std::string& line) override;
-  void SetSize(std::pair<size_t, size_t> size) override {
-    std::tie(rows_, cols_) = size;
-    lines_to_read_ = rows_;
-  };
   int CountLiveNeighbors(int row, int col);
 
   std::vector<std::vector<CaveCell>> board_;
