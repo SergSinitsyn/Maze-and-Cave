@@ -1,5 +1,5 @@
-#ifndef MAZE_VIEW_CAVEWIDGET_CAVEWIDGET_H_
-#define MAZE_VIEW_CAVEWIDGET_CAVEWIDGET_H_
+#ifndef MAZE_VIEW_PICTUREWIDGET_CAVEWIDGET_H_
+#define MAZE_VIEW_PICTUREWIDGET_CAVEWIDGET_H_
 
 #include <QColor>
 #include <QPainter>
@@ -8,8 +8,10 @@
 
 #include "../../other/cavecell.h"
 #include "../../other/cell.h"
-#include "../../other/maze_matrix.h" // TODO заменить на cavematrix
+#include "../../other/maze_matrix.h"  // TODO заменить на cavematrix
 #include "picturewidget.h"
+
+using CaveMatrix = std::vector<std::vector<CaveCell>>;
 
 class CaveWidget : public PictureWidget {
   Q_OBJECT
@@ -31,13 +33,13 @@ class CaveWidget : public PictureWidget {
  private:
   void CheckTheme();
   void PaintCave();
-  void PaintCaveCell(CaveCell& cell); 
+  void PaintCaveCell(CaveCell& cell);
 
-  std::vector<MazeCell> cave_;
-
+  //  std::vector<MazeCell> cave_;
+  CaveMatrix cave_;
   QPen wall_line_;
   QColor cave_color_;
   QPalette palette_;
 };
 
-#endif  //  MAZE_VIEW_CAVEWIDGET_CAVEWIDGET_H_
+#endif  //  MAZE_VIEW_PICTUREWIDGET_CAVEWIDGET_H_

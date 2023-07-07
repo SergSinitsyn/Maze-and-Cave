@@ -39,7 +39,8 @@ void Controller::FindPath(Cell start_cell, Cell end_cell) {
 }
 
 void Controller::LoadCaveFile(const std::string &file_name) {
-  //
+  // model_cave_->ReadFile(file_name);
+
 }
 
 void Controller::CaveNextStep(int birth, int death) {
