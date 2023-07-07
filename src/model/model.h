@@ -13,6 +13,8 @@ class Model {
   Model(){};
   Model(size_t rows, size_t cols) : rows_(rows), cols_(cols){};
   virtual ~Model(){};
+  size_t rows() const { return rows_; };
+  size_t cols() const { return cols_; };
   std::pair<size_t, size_t> ReadSize(const std::string& filename);
   void ReadFile(const std::string& filename);
 

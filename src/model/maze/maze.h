@@ -14,8 +14,9 @@ class Maze : public Model {
 
   ~Maze();
 
-  size_t rows() const;
-  size_t cols() const;
+  //! теперь находится в базовом классе
+  // size_t rows() const;
+  // size_t cols() const;
   void GenerationMaze(size_t rows, size_t cols);
   //! теперь находится в базовом классе
   // void ReadFile(const std::string& filename);

@@ -24,9 +24,9 @@ Maze::Maze(size_t rows, size_t cols) : Maze() {
 
 Maze::~Maze() {}
 
-size_t Maze::rows() const { return rows_; }
-
-size_t Maze::cols() const { return cols_; }
+//! Теперь в Model
+// size_t Maze::rows() const { return rows_; }
+// size_t Maze::cols() const { return cols_; }
 
 //! Дублируется с Саве
 /*void Maze::ReadFile(const std::string& filename) {
