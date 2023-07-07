@@ -12,7 +12,7 @@ class Cave : public Model {
   // Cave(){};
   Cave(size_t rows, size_t cols, int density = 50);
   CaveMatrix const& GetMatrix() const { return board_; };
-  void MakeOneTurn();
+  void MakeOneTurn(int live, int dead);
 
  protected:
   void ReadLine(size_t& line_number, const std::string& line) override;

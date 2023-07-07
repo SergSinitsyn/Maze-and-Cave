@@ -34,8 +34,10 @@ int Cave::CountLiveNeighbors(int row, int col) {
   return live_neighbors;
 }
 
-void Cave::MakeOneTurn() {
+void Cave::MakeOneTurn(int live, int dead) {
   CaveMatrix new_board(rows_, std::vector<CaveCell>(cols_));
+  live_treshold_ = live;
+  dead_treshold_ = dead;
 
   for (size_t i = 0; i < rows_; ++i) {
     for (size_t j = 0; j < cols_; ++j) {
