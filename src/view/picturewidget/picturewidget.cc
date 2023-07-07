@@ -1,7 +1,8 @@
+#include "picturewidget.h"
+
 #include <QPoint>
 
 #include "../../other/cell.h"
-#include "picturewidget.h"
 
 void PictureWidget::set_rows(size_t rows) {
   rows_ = rows;
@@ -14,9 +15,31 @@ void PictureWidget::set_cols(size_t cols) {
 
 void PictureWidget::paintEvent(QPaintEvent* event) {
   painter_.begin(this);
-  //!
+  PaintPicture();
   painter_.end();
 }
+
+void PictureWidget::PaintPicture() {}
+
+void PictureWidget::CheckTheme() {
+  if (palette_ == QGuiApplication::palette()) {
+    return;
+  }
+  palette_ = QGuiApplication::palette();
+  SetTheme();
+}
+
+void PictureWidget::SetTheme() {
+  if (palette_.color(QPalette::Window).lightness() < 128) {
+    DarkTheme();
+  } else {
+    LightTheme();
+  }
+}
+
+void PictureWidget::DarkTheme() {}
+
+void PictureWidget::LightTheme() {}
 
 QPoint PictureWidget::Center(const Cell& cell) {
   return QPoint((cell.col() + 0.5) * cell_size_.width(),

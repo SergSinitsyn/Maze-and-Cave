@@ -28,14 +28,7 @@ void Controller::SaveMazeToFile(const std::string &file_name) {
 }
 
 void Controller::FindPath(Cell start_cell, Cell end_cell) {
-  // model_maze_->FindPath(start_row, start_col, end_row, end_col);
-  // view_->SetPath(model_maze_->GetPath());
-
   view_->SetPath(model_maze_->FindPath(start_cell, end_cell));
-
-  // ? если пути нет - вектор пустой
-  // ? если начальная тогка совпадает с конечной - вектор пустой??? или не
-  // давать ? такой сигнал в модель вообще
 }
 
 void Controller::LoadCaveFile(const std::string &file_name) {
@@ -44,8 +37,6 @@ void Controller::LoadCaveFile(const std::string &file_name) {
 }
 
 void Controller::CaveNextStep(int birth, int death) {
-  model_cave_->MakeOneTurn();
-  // TODO удалить верхнее, оставить нижнее
-  //  model_cave_->MakeOneTurn(birth, death);
+  model_cave_->MakeOneTurn(birth, death);
   view_->LoadCaveFromModel(model_cave_->GetMatrix());
 }

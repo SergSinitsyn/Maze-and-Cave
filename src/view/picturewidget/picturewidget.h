@@ -15,12 +15,21 @@ class PictureWidget : public QWidget {
         size_(500),
         rows_(10),
         cols_(10),
-        cell_size_(size_ / cols_, size_ / rows_) {}
+        cell_size_(size_ / cols_, size_ / rows_),
+        palette_(QGuiApplication::palette()) {
+    SetTheme();
+  }
+
   void set_rows(size_t rows);
   void set_cols(size_t cols);
 
  protected:
   void paintEvent(QPaintEvent* event) override;
+  virtual void PaintPicture();
+  void CheckTheme();
+  void SetTheme();
+  virtual void DarkTheme();
+  virtual void LightTheme();
 
   QPoint Center(const Cell& cell);
   QPoint LeftTopCorner(const Cell& cell);
@@ -33,6 +42,7 @@ class PictureWidget : public QWidget {
   size_t cols_;
   QSizeF cell_size_;
   QPainter painter_;
+  QPalette palette_;
 };
 
 #endif  //  MAZE_VIEW_PICTUREWIDGET_PICTUREWIDGET_H_
