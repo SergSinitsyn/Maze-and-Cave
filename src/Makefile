@@ -20,17 +20,18 @@ endif
 
 NAME					= maze
 
-SRC_DIR					= ./model/maze
+SRC_DIR					= ./model/
 SOURCE_FILES			= *.cc
 
 TEST_FILE				= $(NAME)_test
+CAVE_TEST_FILE			= cave_test
 TEST_FILE_COV			= $(NAME)_test_coverage
 TEST_FILE_FOR_LEAKS		= $(NAME)_test_for_leaks
 
 TEST_DIR				= ./tests
 TEST_SOURCE_FILE		= $(TEST_FILE).cc
 
-SOURCE					= $(SRC_DIR)/$(SOURCE_FILES) 
+SOURCE					= $(SRC_DIR)/$(SOURCE_FILES) $(SRC_DIR)/maze/$(SOURCE_FILES)
 TEST 					= $(TEST_DIR)/$(TEST_SOURCE_FILE)
 OTHER					= ./other/*.cc
 
@@ -48,19 +49,20 @@ clean:
 	$(CLEAN) ../$(DIST_NAME).tar.gz ../$(DIST_NAME)
 	$(CLEAN) report*
 	$(CLEAN) $(BUILD_DIR)
+	$(CLEAN) $(CAVE_TEST_FILE)
 
-$(TEST_FILE): $(SOURCE) $(TEST) $(OTHER)
+$(TEST_FILE): $(SOURCE) $(TEST) $(OTHER) $(SRC_DIR)/cave/$(SOURCE_FILES) $(SRC_DIR)/$(SOURCE_FILES)
 	$(CLEAN) $(TEST_FILE)
-	$(CC) $(WFLAGS) $(CFLACS) $(SOURCE) $(TEST) $(OTHER) -o $(TEST_FILE) $(CHECKFLAGS)
+	$(CC) $(WFLAGS) $(CFLACS) $^ -o $(TEST_FILE) $(CHECKFLAGS)
 
-tests: $(TEST_FILE)
+tests: $(TEST_FILE) 
 	./$(TEST_FILE)
 
 rebuild: clean all
 
-report/index.html: $(SOURCE) $(TEST) $(OTHER)
-	$(CC) $(WFLAGS) $(GCOVFLAGS) $(CFLACS) $(SOURCE) $(TEST) $(OTHER) -o $(TEST_FILE_COV) $(CHECKFLAGS)
-	./$(TEST_FILE_COV)
+report/index.html: $(SOURCE) $(TEST) $(OTHER) $(SRC_DIR)/cave/$(SOURCE_FILES) $(SRC_DIR)/$(SOURCE_FILES)
+	$(CC) $(WFLAGS) $(GCOVFLAGS) $(CFLACS) $^ -o $(TEST_FILE_COV) $(CHECKFLAGS)
+	-./$(TEST_FILE_COV)
 	lcov -t "$(TEST_FILE_COV)" -o $(TEST_FILE_COV).info -c -d . --no-external
 	genhtml -o report $(TEST_FILE_COV).info
 

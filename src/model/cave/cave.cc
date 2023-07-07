@@ -7,8 +7,8 @@
 Cave::Cave(size_t rows, size_t cols, int density) : Model(rows, cols) {
   srand((unsigned)time(NULL));
   SetSize({rows, cols});
-  for (int i = 0; i < rows_; ++i) {
-    for (int j = 0; j < cols_; ++j) {
+  for (size_t i = 0; i < rows_; ++i) {
+    for (size_t j = 0; j < cols_; ++j) {
       board_[i][j].SetUp(i, j, (rand() % 100) < density);
     }
   }
@@ -16,6 +16,8 @@ Cave::Cave(size_t rows, size_t cols, int density) : Model(rows, cols) {
 
 int Cave::CountLiveNeighbors(int row, int col) {
   int live_neighbors = 0;
+  int rows = rows_;
+  int cols = cols_;
   for (int dx = -1; dx <= 1; ++dx) {
     for (int dy = -1; dy <= 1; ++dy) {
       if (dx == 0 && dy == 0) continue;
@@ -23,7 +25,7 @@ int Cave::CountLiveNeighbors(int row, int col) {
       int ni = row + dx;
       int nj = col + dy;
 
-      if (ni >= 0 && ni < rows_ && nj >= 0 && nj < cols_ &&
+      if (ni >= 0 && ni < rows && nj >= 0 && nj < cols &&
           board_[ni][nj].life()) {
         live_neighbors++;
       }
@@ -32,11 +34,13 @@ int Cave::CountLiveNeighbors(int row, int col) {
   return live_neighbors;
 }
 
-void Cave::MakeOneTurn() {
+void Cave::MakeOneTurn(int live, int dead) {
   CaveMatrix new_board(rows_, std::vector<CaveCell>(cols_));
+  live_treshold_ = live;
+  dead_treshold_ = dead;
 
-  for (int i = 0; i < rows_; ++i) {
-    for (int j = 0; j < cols_; ++j) {
+  for (size_t i = 0; i < rows_; ++i) {
+    for (size_t j = 0; j < cols_; ++j) {
       int live_neighbors = CountLiveNeighbors(i, j);
       // Apply the rules of the game
       if (board_[i][j].life()) {
@@ -55,9 +59,15 @@ void Cave::MakeOneTurn() {
   board_ = new_board;
 }
 
+/**
+ * Set the size of the cave.
+ * @param size the new size of the cave
+ * @throws None
+ */
 void Cave::SetSize(std::pair<size_t, size_t> size) {
   Model::SetSize(size);
-  board_.resize(rows_, std::vector<CaveCell>(cols_));
+  board_.resize(rows_);
+  for (auto& row : board_) row.resize(cols_);
 };
 
 void Cave::ReadLine(size_t& line_number, const std::string& line) {
@@ -65,8 +75,7 @@ void Cave::ReadLine(size_t& line_number, const std::string& line) {
   size_t line_index = 0;
   for (size_t col_index = 0; col_index < cols_; ++col_index) {
     bool life = std::stoi(&line.at(line_index), &num_size);
-    board_[line_number][col_index].SetUp(line_number, col_index,
-                                         !life);  //! 1 is dead cell in file
+    board_.at(line_number).at(col_index).SetUp(line_number, col_index, life);
     line_index += num_size;
   }
 }

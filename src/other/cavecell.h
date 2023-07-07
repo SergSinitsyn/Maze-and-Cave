@@ -8,6 +8,7 @@
 class CaveCell : public Cell {
  public:
   CaveCell(){};
+  CaveCell(bool life) : life_(life){};
   CaveCell(size_t row, size_t col, bool life_ = false)
       : Cell(row, col), life_(life_) {}
 

@@ -4,6 +4,8 @@
 
 #include <fstream>
 
+#include "../model/cave/cave.h"
+
 bool CompareFiles(const std::string& file1, const std::string& file2) {
   std::ifstream stream1(file1);
   std::ifstream stream2(file2);
@@ -33,7 +35,7 @@ TEST(Viewer, ReadFile_File_missing) {
 }
 TEST(Viewer, ReadFile_File_empty) {
   Maze maze;
-  std::string file_name = "../data-samples/maze_empty.mze";
+  std::string file_name = "maze-samples/maze_empty.mze";
   try {
     maze.ReadFile(file_name);
   } catch (const std::invalid_argument& e) {
@@ -44,13 +46,13 @@ TEST(Viewer, ReadFile_File_empty) {
 
 TEST(Viewer, ReadFile_bad) {
   Maze maze;
-  std::string file_name = "../data-samples/maze1x1.mze";
+  std::string file_name = "maze-samples/maze1x1.mze";
   ASSERT_ANY_THROW(maze.ReadFile(file_name));
 }
 
 TEST(Viewer, ReadFile) {
   Maze maze;
-  std::string file_name = "../data-samples/maze4x4.mze";
+  std::string file_name = "maze-samples/maze4x4.mze";
   maze.ReadFile(file_name);
   size_t result_rows = 4;
   size_t result_cols = 4;
@@ -78,7 +80,7 @@ TEST(Viewer, ReadFile) {
 
 TEST(Viewer, WriteFile) {
   Maze maze;
-  std::string file_name = "../data-samples/maze20x20.mze";
+  std::string file_name = "maze-samples/maze20x20.mze";
   ASSERT_NO_THROW(maze.ReadFile(file_name));
   maze.WriteFile("test.mze");
   ASSERT_TRUE(CompareFiles("test.mze", file_name));
@@ -132,7 +134,7 @@ TEST(Viewer, Generation_maze) {
 
 TEST(Viewer, FindPath) {
   Maze maze;
-  std::string file_name = "../data-samples/maze4x4.mze";
+  std::string file_name = "maze-samples/maze4x4.mze";
   maze.ReadFile(file_name);
   Cell start = {0, 0};
   Cell finish = {3, 0};
@@ -145,7 +147,91 @@ TEST(Viewer, FindPath) {
   }
 }
 
-int main(int argc, char* argv[]) {
-  testing::InitGoogleTest(&argc, argv);
-  return RUN_ALL_TESTS();
+// int main(int argc, char* argv[]) {
+//   testing::InitGoogleTest(&argc, argv);
+//   return RUN_ALL_TESTS();
+// }
+
+TEST(Cave, ReadFile_File_empty) {
+  Cave cave(5, 5);
+  std::string file_name = "maze-samples/cave_empty.cve";
+  try {
+    cave.ReadFile(file_name);
+  } catch (const std::invalid_argument& e) {
+    std::string expected_error = "File read error. The file is empty.";
+    ASSERT_STREQ(expected_error.c_str(), e.what());
+  }
+}
+
+TEST(Cave, ReadFile_bad) {
+  Cave cave(5, 5);
+  std::string file_name = "maze-samples/cave_0.cve";
+  ASSERT_ANY_THROW(cave.ReadFile(file_name));
+}
+
+TEST(Cave, ReadFile_wrong_size) {
+  Cave cave(5, 5);
+  std::string file_name = "maze-samples/wrong_size_cave.cve";
+  ASSERT_ANY_THROW(cave.ReadFile(file_name));
+}
+
+TEST(Cave, Model_ReadSize) {
+  Model model(5, 5);
+  std::string line = "1 0 1 0 1";
+  size_t row = 0;
+  ASSERT_ANY_THROW(model.ReadLine(row, line));
+}
+
+TEST(Cave, ReadFile) {
+  Cave cave(5, 7);
+  std::string file_name = "maze-samples/cave_1.cve";
+  cave.ReadFile(file_name);
+  size_t result_rows = 10;
+  size_t result_cols = 10;
+  Cave result_cave = Cave(result_rows, result_cols);
+  EXPECT_EQ(cave.rows(), result_cave.rows());
+  EXPECT_EQ(cave.cols(), result_cave.cols());
+
+  CaveMatrix result_matrix = {
+      {1, 0, 1, 0, 0, 0, 0, 1, 1, 0}, {0, 0, 1, 1, 0, 0, 0, 0, 0, 1},
+      {0, 0, 1, 0, 1, 0, 1, 1, 0, 1}, {0, 1, 1, 1, 1, 1, 1, 0, 0, 0},
+      {0, 0, 0, 1, 1, 0, 0, 1, 1, 1}, {0, 1, 0, 1, 0, 1, 0, 0, 0, 0},
+      {1, 1, 0, 0, 0, 0, 0, 1, 0, 0}, {0, 0, 0, 0, 0, 0, 1, 0, 1, 1},
+      {1, 0, 0, 0, 0, 1, 1, 0, 0, 0}, {0, 1, 1, 0, 0, 1, 1, 0, 0, 0}};
+
+  int sum = 0;
+  CaveMatrix file_matrix = cave.GetMatrix();
+  for (size_t i = 0; i < result_rows; ++i) {
+    for (size_t j = 0; j < result_cols; ++j) {
+      EXPECT_EQ(file_matrix[i][j].life(), result_matrix[i][j].life());
+      sum += file_matrix[i][j].life();
+    }
+  }
+  cave.MakeOneTurn(2, 3);
+  int new_sum = 0;
+  CaveMatrix new_matrix = cave.GetMatrix();
+  for (size_t i = 0; i < result_rows; ++i) {
+    for (size_t j = 0; j < result_cols; ++j) {
+      new_sum += new_matrix[i][j].life();
+    }
+  }
+  EXPECT_NE(sum, new_sum);
+}
+
+TEST(Cave, Generate) {
+  const int kSize = 10;
+  Cave cave(kSize, kSize);
+  CaveMatrix matrix = cave.GetMatrix();
+  for (size_t i = 0; i < kSize; ++i) {
+    int sum = 0;
+    int prev_sum = 0;
+    for (size_t j = 0; j < kSize; ++j) {
+      sum += matrix[i][j].life();
+    }
+    ASSERT_TRUE(sum > 0);
+    ASSERT_TRUE(sum < kSize);
+    ASSERT_TRUE(prev_sum != sum);
+    prev_sum = sum;
+    sum = 0;
+  }
 }
