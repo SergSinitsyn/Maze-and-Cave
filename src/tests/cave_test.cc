@@ -44,3 +44,21 @@ TEST(Cave, ReadFile) {
     }
   }
 }
+
+TEST(Cave, Generate) {
+  const int kSize = 10;
+  Cave cave(kSize, kSize);
+  CaveMatrix matrix = cave.GetMatrix();
+  for (size_t i = 0; i < kSize; ++i) {
+    int sum = 0;
+    int prev_sum = 0;
+    for (size_t j = 0; j < kSize; ++j) {
+      sum += matrix[i][j].life();
+    }
+    ASSERT_TRUE(sum > 0);
+    ASSERT_TRUE(sum < kSize);
+    ASSERT_TRUE(prev_sum != sum);
+    prev_sum = sum;
+    sum = 0;
+  }
+}
