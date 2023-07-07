@@ -73,10 +73,7 @@ void Cave::ReadLine(size_t& line_number, const std::string& line) {
   size_t line_index = 0;
   for (size_t col_index = 0; col_index < cols_; ++col_index) {
     bool life = std::stoi(&line.at(line_index), &num_size);
-    board_.at(line_number)
-        .at(col_index)
-        .SetUp(line_number, col_index,
-               !life);  //! 1 is dead cell in file
+    board_.at(line_number).at(col_index).SetUp(line_number, col_index, life);
     line_index += num_size;
   }
 }
