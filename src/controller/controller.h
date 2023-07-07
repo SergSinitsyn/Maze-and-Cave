@@ -5,6 +5,8 @@
 #include "../model/maze/maze.h"
 #include "../view/mainwindow/mainwindow.h"
 
+#include "../other/cavecell.h" // !
+
 template <typename T>
 class Singleton {
  public:
@@ -21,6 +23,8 @@ class Singleton {
   Singleton(const Singleton&) = delete;
   Singleton& operator=(const Singleton&) = delete;
 };
+
+using CaveMatrix = std::vector<std::vector<CaveCell>>;
 
 class Controller : public Singleton<Controller> {
  public:

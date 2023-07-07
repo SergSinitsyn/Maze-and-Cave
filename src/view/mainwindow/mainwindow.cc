@@ -1,17 +1,19 @@
 #include "mainwindow.h"
 
 #include "../../controller/controller.h"
-#include "./ui_mainwindow.h"
-#include "../picturewidget/mazewidget.h"
 #include "../picturewidget/cavewidget.h"
+#include "../picturewidget/mazewidget.h"
+#include "./ui_mainwindow.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent), ui(new Ui::MainWindow) {
   ui->setupUi(this);
-
-  connect(ui->widget, &MazeWidget::UpdateStartAndEndCell, this,
-          &MainWindow::NewStartAndEndCell);
   adjustSize();
+  connect(ui->maze_widget, &MazeWidget::UpdateStartAndEndCell, this,
+          &MainWindow::NewStartAndEndCell);
+  connect(timer, &QTimer::timeout, this, &MainWindow::NextStepCave);
+  ui->tabWidget_controls->setCurrentIndex(0);
+  ui->stackedWidget_picture->setCurrentIndex(0);
 }
 
 MainWindow::~MainWindow() { delete ui; }
@@ -21,25 +23,24 @@ void MainWindow::SetController(Controller &controller) {
 }
 
 void MainWindow::LoadMazeFromModel(MazeMatrix &maze) {
-  maze_load_ = true;  //! не здесь?
-  ui->widget->LoadMaze(maze);
+  ui->maze_widget->LoadMaze(maze);
 }
 
 void MainWindow::LoadCaveFromModel(MazeMatrix &cave) {
-  // maze_load_ = true;  //! не здесь?
-  // ui->widget->LoadCave(cave);
+  // ui->maze_widget->LoadCave(cave);
 }
 
 void MainWindow::SetPath(std::vector<Cell> path) {
-  ui->widget->SetPath(path);
+  ui->maze_widget->SetPath(path);
 }
 
-void MainWindow::NewStartAndEndCell(Cell start_cell , Cell end_cell) {
-  controller_->FindPath( start_cell,  end_cell);  // рефакторить?
+void MainWindow::NewStartAndEndCell(Cell start_cell, Cell end_cell) {
+  controller_->FindPath(start_cell, end_cell);  // рефакторить?
   ui->statusbar->showMessage(
       "Start cell is " + QString::number(start_cell.row() + 1) + "," +
       QString::number(start_cell.col() + 1) + "    ###    " + "End cell is " +
-      QString::number(end_cell.row() + 1) + "," + QString::number(end_cell.col() + 1));
+      QString::number(end_cell.row() + 1) + "," +
+      QString::number(end_cell.col() + 1));
 }
 
 void MainWindow::on_pushButton_load_maze_file_clicked() {
@@ -84,27 +85,39 @@ void MainWindow::on_pushButton_load_cave_file_clicked() {
   //
 }
 
-void MainWindow::on_pushButton_next_step_clicked() {
-  //
-  //    controller_->CaveNextStep();
-}
+void MainWindow::on_pushButton_next_step_clicked() { NextStepCave(); }
 
-void MainWindow::on_tabWidget_currentChanged(int index) {
-  // ui->widget->set_mode(static_cast<MazeWidget::Mode>(index));
+void MainWindow::on_tabWidget_controls_currentChanged(int index) {
+  ui->stackedWidget_picture->setCurrentIndex(index);
+  ui->statusbar->clearMessage();
 }
 
 void MainWindow::on_pushButton_path_clicked(bool checked) {
   ui->pushButton_path->setText(checked ? "Path Enable" : "Path Disable");
-  ui->widget->set_enable_path(checked);
+  ui->maze_widget->set_enable_path(checked);
 }
 
 void MainWindow::on_pushButton_automatic_work_clicked(bool checked) {
-  // TODO block other vidgets (buttons)
-  // ?период доступный изменения во ввремя работы автономного режима
+  if (checked) {
+    BlockControls(!checked);
+    timer->start(ui->spinBox_periodicity->value());
+  } else {
+    timer->stop();
+    BlockControls(!checked);
+  }
+}
 
-  // скорость выбирается здесь же
-  // поэтому сделать для этого метод
+void MainWindow::BlockControls(bool status) {
+  ui->pushButton_load_cave_file->setEnabled(status);
+  ui->pushButton_next_step->setEnabled(status);
+  ui->spinBox_birth_limit->setEnabled(status);
+  ui->spinBox_death_limit->setEnabled(status);
+  ui->spinBox_periodicity->setEnabled(status);
+  ui->tabWidget_controls->setTabEnabled(0, status);
+}
 
-  // цикле запусткается
-  //  controller_->CaveNextStep();
+void MainWindow::NextStepCave() {
+  // хранить приватные поля для значений? для повышения скорости
+  controller_->CaveNextStep(ui->spinBox_birth_limit->value(),
+                            ui->spinBox_death_limit->value());
 }

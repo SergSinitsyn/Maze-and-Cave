@@ -8,15 +8,11 @@
 
 void CaveWidget::LoadCave(MazeMatrix& cave) {
   //! виджет для пещер еще в разработке
+  //  set_rows(cave.rows());  // определить сколько строк и столбцов
+  //  set_cols(cave.cols());
 
-  // set_rows(cave.row());
-  // set_cols(cave.col());
-  // cave_.clear();
-  // for (size_t row = 0; row < rows_; ++row) {
-  //   for (size_t col = 0; col < cols_; ++col) {
-  //     cave_.push_back(MazeCell(row, col, maze(row, col).life()));
-  //   }
-  // }
+  // хранить ссылку на матрицу
+  // cave_ = cave;
   // update();
 }
 
@@ -41,15 +37,24 @@ void CaveWidget::paintEvent(QPaintEvent* event) {
 }
 
 void CaveWidget::PaintCave() {
-  // for (int i = 0; i < cave_.size(); ++i) {
-  //   PaintCaveCell(cave_.at(i));
-  // }
+  if (cave_.empty()) return;
+  // правильно ли?
+
+  //  std::vector<std::vector<CaveCell>> cave;
+
+  //  for (int i = 0; i < cave_.size(); ++i) {
+  //    for (int j = 0; i < cave_.at(0).size(); ++j) {
+  //      PaintCaveCell(cave_[i][j]);
+  //    }
+  //  }
+
+  // правильно ли?
 }
 
 void CaveWidget::PaintCaveCell(CaveCell& cell) {
-  // painter_.setPen(wall_line_);
-  // if (cell.life())
-  //   painter_.fillRect(QRect(LeftTopCorner(cell),
-  //                           QSize(cell_size_.width(), cell_size_.height())),
-  //                     Qt::white);
+  painter_.setPen(wall_line_);
+  if (cell.life())
+    painter_.fillRect(QRect(LeftTopCorner(cell),
+                            QSize(cell_size_.width(), cell_size_.height())),
+                      Qt::white);
 }

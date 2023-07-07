@@ -13,8 +13,8 @@ class PictureWidget : public QWidget {
       : QWidget(parent),
         // TODO to google-style constructor
         size_(500),
-        rows_(4),
-        cols_(4),
+        rows_(10),
+        cols_(10),
         cell_size_(size_ / cols_, size_ / rows_) {}
   void set_rows(size_t rows);
   void set_cols(size_t cols);
