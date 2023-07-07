@@ -110,8 +110,8 @@ void Maze::ReadLine(size_t& line_number, const std::string& line) {
   cols_ = cols;
 }*/
 
-std::vector<Cell> Maze::MakePathVector(std::vector<std::vector<Cell>>& prev,
-                                       Cell start, Cell end) {
+std::vector<Cell> Maze::MakePathVector(
+    std::vector<std::vector<Cell>>& const prev, Cell start, Cell end) {
   std::vector<Cell> path;
   Cell current_point = end;
   while (current_point != start) {
@@ -143,8 +143,8 @@ std::vector<Cell> Maze::FindPath(Cell start, Cell end) {
     }
 
     // Проверяем соседние клетки
-    int delta_row[] = {-1, 1, 0, 0};
-    int delta_column[] = {0, 0, -1, 1};
+    const int delta_row[] = {-1, 1, 0, 0};
+    const int delta_column[] = {0, 0, -1, 1};
     for (size_t i = 0; i < 4; i++) {
       size_t new_row = current_point.row() + delta_row[i];
       size_t new_col = current_point.col() + delta_column[i];
