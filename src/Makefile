@@ -55,16 +55,14 @@ $(TEST_FILE): $(SOURCE) $(TEST) $(OTHER)
 	$(CLEAN) $(TEST_FILE)
 	$(CC) $(WFLAGS) $(CFLACS) $(SOURCE) $(TEST) $(OTHER) -o $(TEST_FILE) $(CHECKFLAGS)
 
-$(CAVE_TEST_FILE): $(SOURCE)=$(SRC_DIR)/$(SOURCE_FILES) $(SRC_DIR)/cave/$(SOURCE_FILES)
-$(CAVE_TEST_FILE): $(TEST)=$(TEST_DIR)/cave_test.cc
 $(CAVE_TEST_FILE): $(SRC_DIR)/$(SOURCE_FILES) $(SRC_DIR)/cave/$(SOURCE_FILES) $(TEST_DIR)/cave_test.cc $(OTHER)
 	$(CLEAN) $(CAVE_TEST_FILE)
-	$(CC) $(WFLAGS) $(CFLACS) $(SRC_DIR)/$(SOURCE_FILES) $(SRC_DIR)/cave/$(SOURCE_FILES) $(TEST_DIR)/cave_test.cc $(OTHER) -o $(CAVE_TEST_FILE) $(CHECKFLAGS)
+	$(CC) $(WFLAGS) $(CFLACS) $^ -o $@ $(CHECKFLAGS)
 
 cave_tests: $(CAVE_TEST_FILE)
 	./$(CAVE_TEST_FILE)
 
-tests: $(TEST_FILE)
+tests: $(TEST_FILE) cave_tests
 	./$(TEST_FILE)
 
 rebuild: clean all
