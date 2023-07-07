@@ -51,25 +51,18 @@ clean:
 	$(CLEAN) $(BUILD_DIR)
 	$(CLEAN) $(CAVE_TEST_FILE)
 
-$(TEST_FILE): $(SOURCE) $(TEST) $(OTHER)
+$(TEST_FILE): $(SOURCE) $(TEST) $(OTHER) $(SRC_DIR)/cave/$(SOURCE_FILES) $(SRC_DIR)/$(SOURCE_FILES)
 	$(CLEAN) $(TEST_FILE)
-	$(CC) $(WFLAGS) $(CFLACS) $(SOURCE) $(TEST) $(OTHER) -o $(TEST_FILE) $(CHECKFLAGS)
+	$(CC) $(WFLAGS) $(CFLACS) $^ -o $(TEST_FILE) $(CHECKFLAGS)
 
-$(CAVE_TEST_FILE): $(SRC_DIR)/$(SOURCE_FILES) $(SRC_DIR)/cave/$(SOURCE_FILES) $(TEST_DIR)/cave_test.cc $(OTHER)
-	$(CLEAN) $(CAVE_TEST_FILE)
-	$(CC) $(WFLAGS) $(CFLACS) $^ -o $@ $(CHECKFLAGS)
-
-cave_tests: $(CAVE_TEST_FILE)
-	./$(CAVE_TEST_FILE)
-
-tests: $(TEST_FILE) cave_tests
+tests: $(TEST_FILE) 
 	./$(TEST_FILE)
 
 rebuild: clean all
 
-report/index.html: $(SOURCE) $(TEST) $(OTHER)
-	$(CC) $(WFLAGS) $(GCOVFLAGS) $(CFLACS) $(SOURCE) $(TEST) $(OTHER) -o $(TEST_FILE_COV) $(CHECKFLAGS)
-	./$(TEST_FILE_COV)
+report/index.html: $(SOURCE) $(TEST) $(OTHER) $(SRC_DIR)/cave/$(SOURCE_FILES) $(SRC_DIR)/$(SOURCE_FILES)
+	$(CC) $(WFLAGS) $(GCOVFLAGS) $(CFLACS) $^ -o $(TEST_FILE_COV) $(CHECKFLAGS)
+	-./$(TEST_FILE_COV)
 	lcov -t "$(TEST_FILE_COV)" -o $(TEST_FILE_COV).info -c -d . --no-external
 	genhtml -o report $(TEST_FILE_COV).info
 

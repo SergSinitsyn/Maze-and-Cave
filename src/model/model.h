@@ -18,7 +18,6 @@ class Model {
   std::pair<size_t, size_t> ReadSize(const std::string& filename);
   void ReadFile(const std::string& filename);
 
- protected:
   virtual void ReadLine(size_t& line_number, const std::string& line) {
     (void)line_number;  // Unused parameter warning remove
     (void)line;         // Unused parameter warning remove
@@ -28,6 +27,8 @@ class Model {
     std::tie(rows_, cols_) = size;
     lines_to_read_ = rows_;
   };
+
+ protected:
   size_t rows_ = 0;
   size_t cols_ = 0;
   size_t lines_to_read_ = 0;
