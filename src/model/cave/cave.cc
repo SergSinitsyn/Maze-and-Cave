@@ -22,8 +22,7 @@ int Cave::CountLiveNeighbors(int row, int col) {
 }
 
 void Cave::MakeOneTurn() {
-  std::vector<std::vector<CaveCell>> new_board(rows_,
-                                               std::vector<CaveCell>(cols_));
+  CaveMatrix new_board(rows_, std::vector<CaveCell>(cols_));
 
   for (int i = 0; i < rows_; ++i) {
     for (int j = 0; j < cols_; ++j) {
