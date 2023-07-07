@@ -23,7 +23,7 @@ bool CompareFiles(const std::string& file1, const std::string& file2) {
   return true;
 }
 
-TEST(Viewer, ReadFile_File_missing) {
+TEST(Maze, ReadFile_File_missing) {
   Maze maze;
   std::string file_name = "bad_file.txt";
   try {
@@ -33,7 +33,7 @@ TEST(Viewer, ReadFile_File_missing) {
     ASSERT_STREQ(expected_error.c_str(), e.what());
   }
 }
-TEST(Viewer, ReadFile_File_empty) {
+TEST(Maze, ReadFile_File_empty) {
   Maze maze;
   std::string file_name = "maze-samples/maze_empty.mze";
   try {
@@ -44,13 +44,13 @@ TEST(Viewer, ReadFile_File_empty) {
   }
 }
 
-TEST(Viewer, ReadFile_bad) {
+TEST(Maze, ReadFile_bad) {
   Maze maze;
   std::string file_name = "maze-samples/maze1x1.mze";
   ASSERT_ANY_THROW(maze.ReadFile(file_name));
 }
 
-TEST(Viewer, ReadFile) {
+TEST(Maze, ReadFile) {
   Maze maze;
   std::string file_name = "maze-samples/maze4x4.mze";
   maze.ReadFile(file_name);
@@ -78,7 +78,7 @@ TEST(Viewer, ReadFile) {
   }
 }
 
-TEST(Viewer, WriteFile) {
+TEST(Maze, WriteFile) {
   Maze maze;
   std::string file_name = "maze-samples/maze20x20.mze";
   ASSERT_NO_THROW(maze.ReadFile(file_name));
@@ -86,7 +86,7 @@ TEST(Viewer, WriteFile) {
   ASSERT_TRUE(CompareFiles("test.mze", file_name));
 }
 
-TEST(Viewer, Maze_badsize_0) {
+TEST(Maze, Maze_badsize_0) {
   try {
     Maze maze(10, 1);
   } catch (const std::invalid_argument& e) {
@@ -95,7 +95,7 @@ TEST(Viewer, Maze_badsize_0) {
   }
 }
 
-TEST(Viewer, Maze_badsize_1) {
+TEST(Maze, Maze_badsize_1) {
   try {
     Maze maze(1, 10);
   } catch (const std::invalid_argument& e) {
@@ -104,7 +104,7 @@ TEST(Viewer, Maze_badsize_1) {
   }
 }
 
-TEST(Viewer, Maze_badsize_2) {
+TEST(Maze, Maze_badsize_2) {
   try {
     Maze maze(51, 10);
   } catch (const std::invalid_argument& e) {
@@ -113,7 +113,7 @@ TEST(Viewer, Maze_badsize_2) {
   }
 }
 
-TEST(Viewer, Maze_badsize_3) {
+TEST(Maze, Maze_badsize_3) {
   try {
     Maze maze(10, 51);
   } catch (const std::invalid_argument& e) {
@@ -122,7 +122,7 @@ TEST(Viewer, Maze_badsize_3) {
   }
 }
 
-TEST(Viewer, Generation_maze) {
+TEST(Maze, Generation_maze) {
   Maze maze;
   maze.GenerationMaze(50, 50);
   size_t result_rows = 50;
@@ -132,7 +132,7 @@ TEST(Viewer, Generation_maze) {
   ASSERT_EQ(maze.cols(), result_maze.cols());
 }
 
-TEST(Viewer, FindPath) {
+TEST(Maze, FindPath) {
   Maze maze;
   std::string file_name = "maze-samples/maze4x4.mze";
   maze.ReadFile(file_name);
