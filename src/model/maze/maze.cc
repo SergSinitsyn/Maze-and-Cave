@@ -111,7 +111,7 @@ void Maze::ReadLine(size_t& line_number, const std::string& line) {
 }*/
 
 std::vector<Cell> Maze::MakePathVector(
-    std::vector<std::vector<Cell>>& const prev, Cell start, Cell end) {
+    const std::vector<std::vector<Cell>>& prev, Cell start, Cell end) {
   std::vector<Cell> path;
   Cell current_point = end;
   while (current_point != start) {

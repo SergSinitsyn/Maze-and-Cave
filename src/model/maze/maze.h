@@ -35,7 +35,7 @@ class Maze : public Model {
   void CopyPrewRow(size_t row);
   size_t CountSetNumberNotBottomWall(size_t curr_row, size_t curr_set_num);
   void MakeLastRow();
-  std::vector<Cell> MakePathVector(std::vector<std::vector<Cell>>& const prev,
+  std::vector<Cell> MakePathVector(const std::vector<std::vector<Cell>>& prev,
                                    Cell start, Cell end);
   bool RandomBool();
   void ReadLine(size_t& line_number, const std::string& line) override;
