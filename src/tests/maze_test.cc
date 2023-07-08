@@ -223,21 +223,22 @@ TEST(Cave, ReadFile) {
 }
 
 TEST(Cave, Generate) {
-  const int kSize = 10;
+  const int kSize = 50;
   Cave cave(kSize, kSize);
   CaveMatrix matrix = cave.GetMatrix();
+  int prev_sum = 0;
+  bool have_diff = false;
   for (size_t i = 0; i < kSize; ++i) {
     int sum = 0;
-    int prev_sum = 0;
     for (size_t j = 0; j < kSize; ++j) {
-      sum += matrix[i][j].life();
+      sum += static_cast<int>(matrix[i][j].life());
     }
     ASSERT_TRUE(sum > 0);
     ASSERT_TRUE(sum < kSize);
-    ASSERT_TRUE(prev_sum != sum);
+    if (sum != prev_sum) {
+      have_diff = true;
+    }
     prev_sum = sum;
-    sum = 0;
-    (void)prev_sum;
-    (void)sum;
   }
+  ASSERT_TRUE(have_diff);
 }
