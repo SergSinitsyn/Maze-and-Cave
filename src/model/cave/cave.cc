@@ -22,11 +22,11 @@ int Cave::CountLiveNeighbors(int row, int col) {
     for (int dy = -1; dy <= 1; ++dy) {
       if (dx == 0 && dy == 0) continue;
 
-      int ni = row + dx;
-      int nj = col + dy;
+      int new_row = row + dx;
+      int new_column = col + dy;
 
-      if (ni >= 0 && ni < rows && nj >= 0 && nj < cols &&
-          board_[ni][nj].life()) {
+      if (new_row < 0 || new_row >= rows || new_column < 0 ||
+          new_column >= cols || board_[new_row][new_column].life()) {
         live_neighbors++;
       }
     }
@@ -42,28 +42,21 @@ void Cave::MakeOneTurn(int live, int dead) {
   for (size_t i = 0; i < rows_; ++i) {
     for (size_t j = 0; j < cols_; ++j) {
       int live_neighbors = CountLiveNeighbors(i, j);
-      // Apply the rules of the game
+      new_board[i][j] = board_[i][j];
       if (board_[i][j].life()) {
         if (live_neighbors < dead_treshold_) {
-          new_board[i][j].SetUp(i, j, false);  // Cell become dead
+          new_board[i][j].SetUp(i, j, false);
         }
       } else {
         if (live_neighbors > live_treshold_) {
-          new_board[i][j].SetUp(i, j, true);  // Cell is born
+          new_board[i][j].SetUp(i, j, true);
         }
       }
     }
   }
-
-  // Update the original board
   board_ = new_board;
 }
 
-/**
- * Set the size of the cave.
- * @param size the new size of the cave
- * @throws None
- */
 void Cave::SetSize(std::pair<size_t, size_t> size) {
   Model::SetSize(size);
   board_.resize(rows_);

@@ -1,15 +1,14 @@
-#ifndef CAVE_H
-#define CAVE_H
+#ifndef MAZE_MODEL_CAVE_CAVE_H
+#define MAZE_MODEL_CAVE_CAVE_H
 #include <string>
 #include <vector>
 
+#include "../../other/cave_matrix.h"
 #include "../../other/cavecell.h"
 #include "../model.h"
 
-using CaveMatrix = std::vector<std::vector<CaveCell>>;
 class Cave : public Model {
  public:
-  // Cave(){};
   Cave(size_t rows, size_t cols, int density = 50);
   CaveMatrix const& GetMatrix() const { return board_; };
   void MakeOneTurn(int live, int dead);
@@ -24,4 +23,4 @@ class Cave : public Model {
   int dead_treshold_ = 3;
 };
 
-#endif  // CAVE_H
+#endif  // MAZE_MODEL_CAVE_CAVE_H

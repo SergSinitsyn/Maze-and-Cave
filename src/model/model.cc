@@ -10,7 +10,7 @@ std::pair<size_t, size_t> Model::ReadSize(const std::string& line) {
   if (rows <= Model::kMinRow || cols <= Model::kMinCol ||
       rows > Model::kMaxRow || cols > Model::kMaxCol) {
     throw std::invalid_argument(
-        "File read error. The dimensions of the maze are not correct.");
+        "File read error. The dimensions are not correct.");
   }
   return {rows, cols};
 }

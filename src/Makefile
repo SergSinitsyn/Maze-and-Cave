@@ -120,7 +120,7 @@ run_linter:
 	@rm -f .clang-format
 
 cppcheck:
-	cppcheck --std=c++17 --enable=all --language=c++ --suppress=missingInclude --suppress=unusedStructMember\
+	cppcheck --std=c++17 --enable=all --language=c++ --suppress=missingInclude --suppress=noExplicitConstructor\
 	 --suppress=unusedFunction  controller/*.cc controller/*.h model/*.cc model/*.h model/*/*.cc model/*/*.h other/*.h tests/*.cc view/*/*.cc view/*/*.h main.cc
 
 leaks: $(TEST_FILE)
