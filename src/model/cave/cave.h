@@ -10,6 +10,7 @@
 class Cave : public Model {
  public:
   Cave(size_t rows = 50, size_t cols = 50, int density = 50);
+  void Generate(size_t rows = 50, size_t cols = 50, int density = 50);
   CaveMatrix const& GetMatrix() const { return board_; };
   void MakeOneTurn(int live, int dead);
 

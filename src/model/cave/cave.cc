@@ -5,6 +5,10 @@
 #include <tuple>
 
 Cave::Cave(size_t rows, size_t cols, int density) : Model(rows, cols) {
+  Generate(rows, cols, density);
+}
+
+void Cave::Generate(size_t rows, size_t cols, int density) {
   srand((unsigned)time(NULL));
   SetSize({rows, cols});
   for (size_t i = 0; i < rows_; ++i) {
