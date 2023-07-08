@@ -122,6 +122,15 @@ TEST(Maze, Maze_badsize_3) {
   }
 }
 
+TEST(Maze, Maze_move_constructor) {
+  MazeMatrix matrix;
+  MazeMatrix m = std::move(matrix);
+  ASSERT_ANY_THROW(MazeMatrix ma(1, 2));
+  ASSERT_ANY_THROW(matrix(100, 200));
+  ASSERT_ANY_THROW(matrix.set_rows(0));
+  ASSERT_ANY_THROW(matrix.set_cols(0));
+}
+
 TEST(Maze, Generation_maze) {
   Maze maze;
   maze.GenerationMaze(50, 50);
@@ -146,11 +155,6 @@ TEST(Maze, FindPath) {
     ASSERT_EQ(path[i].col(), path_result[i].col());
   }
 }
-
-// int main(int argc, char* argv[]) {
-//   testing::InitGoogleTest(&argc, argv);
-//   return RUN_ALL_TESTS();
-// }
 
 TEST(Cave, ReadFile_File_empty) {
   Cave cave(5, 5);

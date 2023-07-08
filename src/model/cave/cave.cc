@@ -54,7 +54,7 @@ void Cave::MakeOneTurn(int live, int dead) {
       }
     }
   }
-  board_ = new_board;
+  board_ = std::move(new_board);
 }
 
 void Cave::SetSize(std::pair<size_t, size_t> size) {
