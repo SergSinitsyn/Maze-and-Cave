@@ -1,8 +1,8 @@
 #include "cavewidget.h"
 
+#include <QColor>
 #include <QPainter>
 #include <QPoint>
-#include <QColor>
 
 #include "../../other/cavecell.h"
 #include "../../other/cell.h"
@@ -24,8 +24,8 @@ void CaveWidget::PaintPicture() { PaintCave(); }
 void CaveWidget::PaintCave() {
   if (!cave_load_) return;
   if (cave_->empty()) return;
-  for (auto& row : *cave_)
-    for (auto& cell : row) PaintCaveCell(cell);
+  for (const auto& row : *cave_)
+    for (const auto& cell : row) PaintCaveCell(cell);
 }
 
 void CaveWidget::PaintCaveCell(const CaveCell& cell) {

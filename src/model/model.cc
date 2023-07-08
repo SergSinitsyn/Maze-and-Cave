@@ -5,14 +5,14 @@
 
 std::pair<size_t, size_t> Model::ReadSize(const std::string& line) {
   size_t pos = 0;
-  size_t rows = std::stoi(&line.at(pos), &pos);
-  size_t cols = std::stoi(&line.at(pos));
-  if (rows <= Model::kMinRow || cols <= Model::kMinCol ||
-      rows > Model::kMaxRow || cols > Model::kMaxCol) {
+  size_t rows_number = std::stoi(&line.at(pos), &pos);
+  size_t cols_number = std::stoi(&line.at(pos));
+  if (rows_number <= Model::kMinRow || cols_number <= Model::kMinCol ||
+      rows_number > Model::kMaxRow || cols_number > Model::kMaxCol) {
     throw std::invalid_argument(
         "File read error. The dimensions are not correct.");
   }
-  return {rows, cols};
+  return {rows_number, cols_number};
 }
 
 void Model::ReadFile(const std::string& filename) {

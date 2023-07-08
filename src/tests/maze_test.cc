@@ -24,9 +24,9 @@ bool CompareFiles(const std::string& file1, const std::string& file2) {
 }
 
 TEST(Maze, ReadFile_File_missing) {
-  Maze maze;
-  std::string file_name = "bad_file.txt";
   try {
+    Maze maze;
+    std::string file_name = "bad_file.txt";
     maze.ReadFile(file_name);
   } catch (const std::invalid_argument& e) {
     std::string expected_error = "File read error. The file is missing.";
@@ -34,9 +34,9 @@ TEST(Maze, ReadFile_File_missing) {
   }
 }
 TEST(Maze, ReadFile_File_empty) {
-  Maze maze;
-  std::string file_name = "maze-samples/maze_empty.mze";
   try {
+    Maze maze;
+    std::string file_name = "maze-samples/maze_empty.mze";
     maze.ReadFile(file_name);
   } catch (const std::invalid_argument& e) {
     std::string expected_error = "File read error. The file is empty.";
@@ -157,9 +157,9 @@ TEST(Maze, FindPath) {
 }
 
 TEST(Cave, ReadFile_File_empty) {
-  Cave cave(5, 5);
-  std::string file_name = "maze-samples/cave_empty.cve";
   try {
+    Cave cave(5, 5);
+    std::string file_name = "maze-samples/cave_empty.cve";
     cave.ReadFile(file_name);
   } catch (const std::invalid_argument& e) {
     std::string expected_error = "File read error. The file is empty.";
@@ -237,5 +237,7 @@ TEST(Cave, Generate) {
     ASSERT_TRUE(prev_sum != sum);
     prev_sum = sum;
     sum = 0;
+    (void)prev_sum;
+    (void)sum;
   }
 }

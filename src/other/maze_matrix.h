@@ -26,7 +26,7 @@ class MazeMatrix {
   bool MovePossible(const Cell current_point, const int new_row,
                     const int new_col) const;
   bool IsValid(const size_t new_row, const size_t new_col) const;
-  enum Direction { kUp, kDown, kLeft, kRight };
+  enum Direction { kUp, kDown, kLeft, kRight, kNone };
   Direction GetDirection(const Cell current_point, const int new_row,
                          const int new_col) const;
 

@@ -121,7 +121,7 @@ bool MazeMatrix::IsValid(const size_t row, const size_t col) const {
 MazeMatrix::Direction MazeMatrix::GetDirection(const Cell current_point,
                                                const int new_row,
                                                const int new_col) const {
-  Direction d;
+  Direction d = kNone;
   int row_diff = static_cast<int>(current_point.row()) - new_row;
   int col_diff = static_cast<int>(current_point.col()) - new_col;
   if (row_diff < 0) {
