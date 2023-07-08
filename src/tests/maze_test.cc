@@ -222,6 +222,17 @@ TEST(Cave, ReadFile) {
   EXPECT_NE(sum, new_sum);
 }
 
+TEST(Cave, ReadFile25x50) {
+  Cave cave(5, 7);
+  std::string file_name = "maze-samples/cave25x50.cve";
+  cave.ReadFile(file_name);
+  size_t result_rows = 25;
+  size_t result_cols = 50;
+  Cave result_cave = Cave(result_rows, result_cols);
+  EXPECT_EQ(cave.rows(), result_cave.rows());
+  EXPECT_EQ(cave.cols(), result_cave.cols());
+}
+
 TEST(Cave, Generate) {
   const int kSize = 50;
   Cave cave(kSize, kSize);
