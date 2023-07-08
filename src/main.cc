@@ -9,7 +9,7 @@ int main(int argc, char* argv[]) {
   QApplication app(argc, argv);
   MainWindow view;
   Maze model_maze_;
-  Cave model_cave_(10, 10, 40);  // TODO
+  Cave model_cave_;
   Controller& controller = Controller::GetInstance();
   controller.SetModelMaze(model_maze_);
   controller.SetModelCave(model_cave_);
