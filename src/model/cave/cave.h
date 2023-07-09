@@ -20,8 +20,8 @@ class Cave : public Model {
   int CountLiveNeighbors(int row, int col);
 
   CaveMatrix board_;
-  int live_treshold_ = 2;
-  int dead_treshold_ = 3;
+  int live_threshold_ = 2;
+  int dead_threshold_ = 3;
 };
 
 #endif  // MAZE_MODEL_CAVE_CAVE_H

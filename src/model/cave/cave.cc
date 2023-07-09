@@ -9,7 +9,7 @@ Cave::Cave(size_t rows, size_t cols, int density) : Model(rows, cols) {
 }
 
 void Cave::Generate(size_t rows, size_t cols, int density) {
-  srand((unsigned)time(NULL));
+  srand(time(nullptr));
   SetSize({rows, cols});
   for (size_t i = 0; i < rows_; ++i) {
     for (size_t j = 0; j < cols_; ++j) {
@@ -20,17 +20,15 @@ void Cave::Generate(size_t rows, size_t cols, int density) {
 
 int Cave::CountLiveNeighbors(int row, int col) {
   int live_neighbors = 0;
-  int rows = rows_;
-  int cols = cols_;
+  int num_rows = rows_;
+  int num_cols = cols_;
   for (int dx = -1; dx <= 1; ++dx) {
     for (int dy = -1; dy <= 1; ++dy) {
       if (dx == 0 && dy == 0) continue;
-
       int new_row = row + dx;
-      int new_column = col + dy;
-
-      if (new_row < 0 || new_row >= rows || new_column < 0 ||
-          new_column >= cols || board_[new_row][new_column].life()) {
+      int new_col = col + dy;
+      if (new_row < 0 || new_row >= num_rows || new_col < 0 ||
+          new_col >= num_cols || board_[new_row][new_col].life()) {
         live_neighbors++;
       }
     }
@@ -38,21 +36,21 @@ int Cave::CountLiveNeighbors(int row, int col) {
   return live_neighbors;
 }
 
-void Cave::MakeOneTurn(int live, int dead) {
+void Cave::MakeOneTurn(int live_threshold, int dead_threshold) {
   CaveMatrix new_board(rows_, std::vector<CaveCell>(cols_));
-  live_treshold_ = live;
-  dead_treshold_ = dead;
+  live_threshold_ = live_threshold;
+  dead_threshold_ = dead_threshold;
 
   for (size_t i = 0; i < rows_; ++i) {
     for (size_t j = 0; j < cols_; ++j) {
       int live_neighbors = CountLiveNeighbors(i, j);
       new_board[i][j] = board_[i][j];
       if (board_[i][j].life()) {
-        if (live_neighbors < dead_treshold_) {
+        if (live_neighbors < dead_threshold_) {
           new_board[i][j].SetUp(i, j, false);
         }
       } else {
-        if (live_neighbors > live_treshold_) {
+        if (live_neighbors > live_threshold_) {
           new_board[i][j].SetUp(i, j, true);
         }
       }
