@@ -155,14 +155,14 @@ bool MazeMatrix::MovePossible(const Cell current_point, const int new_row,
   Direction direction = GetDirection(current_point, new_row, new_col);
   if (direction == Direction::kRight) {
     move_possible =
-        matrix(current_point.row(), current_point.col()).right_wall() == 0;
+        matrix(current_point.row(), current_point.col()).right_wall() == false;
   } else if (direction == Direction::kDown) {
     move_possible =
-        matrix(current_point.row(), current_point.col()).bottom_wall() == 0;
+        matrix(current_point.row(), current_point.col()).bottom_wall() == false;
   } else if (direction == Direction::kLeft) {
-    move_possible = matrix(new_row, new_col).right_wall() == 0;
+    move_possible = matrix(new_row, new_col).right_wall() == false;
   } else if (direction == Direction::kUp) {
-    move_possible = matrix(new_row, new_col).bottom_wall() == 0;
+    move_possible = matrix(new_row, new_col).bottom_wall() == false;
   }
 
   return move_possible;

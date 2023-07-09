@@ -111,12 +111,11 @@ void Maze::ReadLine(size_t& line_number, const std::string& line) {
 }*/
 
 std::vector<Cell> Maze::MakePathVector(
-    const std::vector<std::vector<Cell>>& prev, Cell start, Cell end) {
+    const std::vector<std::vector<Cell>>& previous, Cell start, Cell end) {
   std::vector<Cell> path;
-  Cell current_point = end;
-  while (current_point != start) {
-    path.push_back(current_point);
-    current_point = prev[current_point.row()][current_point.col()];
+  for (Cell current = end; current != start;
+       current = previous[current.row()][current.col()]) {
+    path.push_back(current);
   }
   path.push_back(start);
   std::reverse(path.begin(), path.end());
@@ -127,34 +126,33 @@ std::vector<Cell> Maze::FindPath(Cell start, Cell end) {
   std::vector<std::vector<bool>> visited(rows_,
                                          std::vector<bool>(cols_, false));
   std::queue<Cell> q;
-  std::vector<std::vector<Cell>> prev(rows_, std::vector<Cell>(cols_));
+  std::vector<std::vector<Cell>> previous(rows_, std::vector<Cell>(cols_));
   std::vector<Cell> path{};
 
   q.push(start);
   visited[start.row()][start.col()] = true;
 
   while (!q.empty()) {
-    Cell current_point = q.front();
+    Cell current = q.front();
     q.pop();
 
-    if (current_point == end) {
-      path = MakePathVector(prev, start, end);
+    if (current == end) {
+      path = MakePathVector(previous, start, end);
       break;
     }
 
-    // Проверяем соседние клетки
     const int delta_row[] = {-1, 1, 0, 0};
     const int delta_column[] = {0, 0, -1, 1};
     for (size_t i = 0; i < 4; i++) {
-      size_t new_row = current_point.row() + delta_row[i];
-      size_t new_col = current_point.col() + delta_column[i];
+      size_t new_row = current.row() + delta_row[i];
+      size_t new_col = current.col() + delta_column[i];
 
       if (maze_matrix_.IsValid(new_row, new_col) &&
-          maze_matrix_.MovePossible(current_point, new_row, new_col) &&
+          maze_matrix_.MovePossible(current, new_row, new_col) &&
           !visited[new_row][new_col]) {
         q.push({new_row, new_col});
         visited[new_row][new_col] = true;
-        prev[new_row][new_col] = current_point;
+        previous[new_row][new_col] = current;
       }
     }
   }
