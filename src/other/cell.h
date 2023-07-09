@@ -5,7 +5,7 @@
 
 class Cell {
  public:
-   Cell() : row_(0), col_(0) {}
+  Cell() : row_(0), col_(0) {}
   Cell(size_t row, size_t col) : row_(row), col_(col) {}
 
   void set_row(int row) { row_ = row; }
@@ -16,7 +16,7 @@ class Cell {
   bool operator!=(const Cell& other) const {
     return row_ != other.row_ || col_ != other.col_;
   }
-   bool operator==(const Cell& other) const {
+  bool operator==(const Cell& other) const {
     return row_ == other.row_ && col_ == other.col_;
   }
 

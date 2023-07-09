@@ -32,13 +32,12 @@ void MazeWidget::LoadMaze(MazeMatrix& maze) {
   update();
 }
 
-void MazeWidget::SetPath(const std::vector<Cell> &path) {
+void MazeWidget::SetPath(const std::vector<Cell>& path) {
   path_ = path;
   path_points_.clear();
   std::transform(path_.begin(), path_.end(), std::back_inserter(path_points_),
                  [this](const auto& cell) { return Center(cell); });
 }
-
 
 void MazeWidget::mousePressEvent(QMouseEvent* event) {
   UpdateStartAndEnd(event);
@@ -48,17 +47,11 @@ void MazeWidget::mouseMoveEvent(QMouseEvent* event) {
   UpdateStartAndEnd(event);
 }
 
-void MazeWidget::PaintPicture() {
-  PaintMaze();
-}
+void MazeWidget::PaintPicture() { PaintMaze(); }
 
-void MazeWidget::DarkTheme() {
-  wall_line_.setColor(Qt::white);
-}
+void MazeWidget::DarkTheme() { wall_line_.setColor(Qt::white); }
 
-void MazeWidget::LightTheme() {
-  wall_line_.setColor(Qt::black);
-}
+void MazeWidget::LightTheme() { wall_line_.setColor(Qt::black); }
 
 void MazeWidget::PaintMaze() {
   if (maze_.empty()) return;
@@ -73,7 +66,12 @@ void MazeWidget::PaintMaze() {
 
 void MazeWidget::PaintFrame() {
   painter_.setPen(wall_line_);
-  painter_.drawRect(1, 1, size_ - 2, size_ - 2);
+  int min = 1;
+  int max = size_ - 1;
+  painter_.drawLine(min, min, min, max);
+  painter_.drawLine(min, min, max, min);
+  painter_.drawLine(min, max, max, max);
+  painter_.drawLine(max, min, max, max);
 }
 
 void MazeWidget::PaintWalls() {
@@ -118,6 +116,7 @@ void MazeWidget::UpdateStartAndEnd(QMouseEvent* event) {
   int row = point.y() / cell_size_.height();
   int col = point.x() / cell_size_.width();
   if (row >= rows_ || col >= cols_ || row < 0 || col < 0) return;
+
   if (event->buttons() & Qt::LeftButton) {
     if (end_cell_ != Cell(row, col)) {
       end_cell_ = Cell(row, col);

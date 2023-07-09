@@ -4,9 +4,8 @@
 #include <QMainWindow>
 #include <QTimer>
 
-#include "../../other/maze_matrix.h"
 #include "../../other/cave_matrix.h"
-
+#include "../../other/maze_matrix.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -38,9 +37,11 @@ class MainWindow : public QMainWindow {
   void on_pushButton_save_maze_clicked();
   void on_pushButton_path_clicked(bool checked);
   void NewStartAndEndCell(Cell start_cell, Cell end_cell);
+  void UnblockControlsAfterMazeLoad();
 
   // cave
   void on_pushButton_load_cave_file_clicked();
+  void on_pushButton_generate_cave_clicked();
   void on_pushButton_next_step_clicked();
   void on_pushButton_automatic_work_clicked(bool checked);
   void BlockControls(bool status);
@@ -50,5 +51,10 @@ class MainWindow : public QMainWindow {
   Ui::MainWindow *ui_;
   Controller *controller_;
   QTimer *timer_ = new QTimer(this);
+
+
+signals:
+    void generateCaveRequested(int rows, int cols, int chance);
+
 };
 #endif  // MAZE_VIEW_MAINWINDOW_MAINWINDOW_H_

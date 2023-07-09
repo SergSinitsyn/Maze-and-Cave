@@ -11,6 +11,7 @@ void Controller::SetModelCave(Cave &model_cave) { model_cave_ = &model_cave; }
 void Controller::SetView(MainWindow &view) {
   view_ = &view;
   view_->SetController(*this);
+  connect(view_, &MainWindow::generateCaveRequested, this, &Controller::GenerateCave);
 }
 
 void Controller::LoadMazeFile(const std::string &file_name) {
@@ -33,6 +34,11 @@ void Controller::FindPath(Cell start_cell, Cell end_cell) {
 
 void Controller::LoadCaveFile(const std::string &file_name) {
   model_cave_->ReadFile(file_name);
+  view_->LoadCaveFromModel(model_cave_->GetMatrix());
+}
+
+void Controller::GenerateCave(int rows, int cols, int chance) {
+  model_cave_->Generate(rows, cols, chance);
   view_->LoadCaveFromModel(model_cave_->GetMatrix());
 }
 

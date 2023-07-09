@@ -19,8 +19,6 @@ void PictureWidget::paintEvent(QPaintEvent* event) {
   painter_.end();
 }
 
-void PictureWidget::PaintPicture() {}
-
 void PictureWidget::CheckTheme() {
   if (palette_ == QGuiApplication::palette()) {
     return;
@@ -35,33 +33,30 @@ void PictureWidget::SetTheme() {
   } else {
     LightTheme();
   }
+  update();
 }
 
-void PictureWidget::DarkTheme() {}
-
-void PictureWidget::LightTheme() {}
-
-QPoint PictureWidget::Center(const Cell& cell) {
-  return QPoint((cell.col() + 0.5) * cell_size_.width(),
-                (cell.row() + 0.5) * cell_size_.height());
+QPointF PictureWidget::Center(const Cell& cell) {
+  return QPointF((cell.col() + 0.5) * cell_size_.width(),
+                 (cell.row() + 0.5) * cell_size_.height());
 }
 
-QPoint PictureWidget::LeftTopCorner(const Cell& cell) {
-  return QPoint(cell.col() * cell_size_.width(),
-                cell.row() * cell_size_.height());
+QPointF PictureWidget::LeftTopCorner(const Cell& cell) {
+  return QPointF(cell.col() * cell_size_.width(),
+                 cell.row() * cell_size_.height());
 }
 
-QPoint PictureWidget::LeftBottomCorner(const Cell& cell) {
-  return QPoint(cell.col() * cell_size_.width(),
-                (cell.row() + 1) * cell_size_.height());
+QPointF PictureWidget::LeftBottomCorner(const Cell& cell) {
+  return QPointF(cell.col() * cell_size_.width(),
+                 (cell.row() + 1) * cell_size_.height());
 }
 
-QPoint PictureWidget::RightTopCorner(const Cell& cell) {
-  return QPoint((cell.col() + 1) * cell_size_.width(),
-                cell.row() * cell_size_.height());
+QPointF PictureWidget::RightTopCorner(const Cell& cell) {
+  return QPointF((cell.col() + 1) * cell_size_.width(),
+                 cell.row() * cell_size_.height());
 }
 
-QPoint PictureWidget::RightBottomCorner(const Cell& cell) {
-  return QPoint((cell.col() + 1) * cell_size_.width(),
-                (cell.row() + 1) * cell_size_.height());
+QPointF PictureWidget::RightBottomCorner(const Cell& cell) {
+  return QPointF((cell.col() + 1) * cell_size_.width(),
+                 (cell.row() + 1) * cell_size_.height());
 }

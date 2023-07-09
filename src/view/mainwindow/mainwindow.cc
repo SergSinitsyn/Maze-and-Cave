@@ -12,6 +12,8 @@ MainWindow::MainWindow(QWidget *parent)
   connect(ui_->maze_widget, &MazeWidget::UpdateStartAndEndCell, this,
           &MainWindow::NewStartAndEndCell);
   connect(timer_, &QTimer::timeout, this, &MainWindow::NextStepCave);
+  connect(ui_->pushButton_generate_cave, &QPushButton::clicked, this,
+          &MainWindow::on_pushButton_generate_cave_clicked);
   ui_->tabWidget_controls->setCurrentIndex(0);
   ui_->stackedWidget_picture->setCurrentIndex(0);
 }
@@ -35,7 +37,6 @@ void MainWindow::LoadCaveFromModel(const CaveMatrix &cave) {
 }
 
 void MainWindow::NextStepCave() {
-  // TODO хранить приватные поля для значений? для повышения скорости?
   controller_->CaveNextStep(ui_->spinBox_birth_limit->value(),
                             ui_->spinBox_death_limit->value());
 }
@@ -57,6 +58,7 @@ void MainWindow::on_pushButton_load_maze_file_clicked() {
     controller_->LoadMazeFile(
         new_filename.toStdString());  // ! сделать в виде сигнала в контроллер?
     ui_->statusbar->showMessage("Correct load");
+    UnblockControlsAfterMazeLoad();
   } catch (const std::exception &exc) {
     QMessageBox::critical(this, "Warning", exc.what());
     ui_->statusbar->showMessage("Error loading file: '" + new_filename + "'" +
@@ -66,19 +68,19 @@ void MainWindow::on_pushButton_load_maze_file_clicked() {
 
 void MainWindow::on_pushButton_generate_clicked() {
   controller_->GenerateMaze(
-      ui_->spinBox_rows->value(),  // ! сделать в виде сигнала в контроллер?
-      ui_->spinBox_cols->value());
+      ui_->spinBox_maze_rows
+          ->value(),  // ! сделать в виде сигнала в контроллер?
+      ui_->spinBox_maze_cols->value());
+  UnblockControlsAfterMazeLoad();
 }
 
 void MainWindow::on_pushButton_save_maze_clicked() {
   QDir::currentPath();
   QString new_filename = QFileDialog::getSaveFileName(0, "Save", "", "*.mze");
-
   if (new_filename.isEmpty()) {
     ui_->statusbar->showMessage("Filename not selected");
     return;
   }
-
   controller_->SaveMazeToFile(new_filename.toStdString());
   //! а если память кончилась?
 }
@@ -95,6 +97,11 @@ void MainWindow::NewStartAndEndCell(Cell start_cell, Cell end_cell) {
       QString::number(start_cell.col() + 1) + "    ###    " + "End cell is " +
       QString::number(end_cell.row() + 1) + "," +
       QString::number(end_cell.col() + 1));
+}
+
+void MainWindow::UnblockControlsAfterMazeLoad() {
+  ui_->pushButton_path->setEnabled(true);
+  ui_->pushButton_save_maze->setEnabled(true);
 }
 
 void MainWindow::on_pushButton_load_cave_file_clicked() {
@@ -118,6 +125,20 @@ void MainWindow::on_pushButton_load_cave_file_clicked() {
   }
 }
 
+// void MainWindow::on_pushButton_generate_cave_clicked() {
+//   controller_->GenerateCave(ui_->spinBox_cave_rows->value(),
+//                             ui_->spinBox_cave_cols->value(),
+//                             ui_->spinBox_cave_chance->value());
+//   UnblockControlsAfterCaveLoad();
+// }
+
+void MainWindow::on_pushButton_generate_cave_clicked() {
+  emit generateCaveRequested(ui_->spinBox_cave_rows->value(),
+                             ui_->spinBox_cave_cols->value(),
+                             ui_->spinBox_cave_chance->value());
+  UnblockControlsAfterCaveLoad();
+}
+
 void MainWindow::on_pushButton_next_step_clicked() { NextStepCave(); }
 
 void MainWindow::on_pushButton_automatic_work_clicked(bool checked) {
@@ -137,6 +158,10 @@ void MainWindow::BlockControls(bool status) {
   ui_->spinBox_death_limit->setEnabled(status);
   ui_->spinBox_periodicity->setEnabled(status);
   ui_->tabWidget_controls->setTabEnabled(0, status);
+  ui_->pushButton_generate_cave->setEnabled(status);
+  ui_->spinBox_cave_rows->setEnabled(status);
+  ui_->spinBox_cave_cols->setEnabled(status);
+  ui_->spinBox_cave_chance->setEnabled(status);
 }
 
 void MainWindow::UnblockControlsAfterCaveLoad() {

@@ -14,16 +14,7 @@
 class MazeWidget : public PictureWidget {
   Q_OBJECT
  public:
-  MazeWidget(QWidget* parent = nullptr)
-      : PictureWidget(parent),
-        // TODO to google-style constructor
-        enable_path_(false),
-        end_cell_(0, 0),
-        start_cell_(0, 0),
-        path_line_(Qt::red),
-        start_dot_(Qt::magenta),
-        end_dot_(Qt::cyan),
-        wall_line_(Qt::blue) {
+  MazeWidget(QWidget* parent = nullptr) : PictureWidget(parent) {
     wall_line_.setWidth(2);
     path_line_.setWidth(2);
     start_dot_.setWidth(4);
@@ -55,18 +46,18 @@ class MazeWidget : public PictureWidget {
   void DefaultStartAndEnd();
   void UpdateStartAndEnd(QMouseEvent* event);
 
-  bool enable_path_;
+  bool enable_path_{false};
 
-  Cell start_cell_;
-  Cell end_cell_;
+  Cell start_cell_{0, 0};
+  Cell end_cell_{0, 0};
   std::vector<MazeCell> maze_;
   std::vector<Cell> path_;
-  std::vector<QPoint> path_points_;
+  std::vector<QPointF> path_points_;
 
-  QPen path_line_;
-  QPen start_dot_;
-  QPen end_dot_;
-  QPen wall_line_;
+  QPen path_line_{Qt::red};
+  QPen start_dot_{Qt::magenta};
+  QPen end_dot_{Qt::cyan};
+  QPen wall_line_{Qt::black};
 };
 
 #endif  //  MAZE_VIEW_PICTUREWIDGET_MAZEWIDGET_H_

@@ -13,14 +13,9 @@
 class CaveWidget : public PictureWidget {
   Q_OBJECT
  public:
-  CaveWidget(QWidget* parent = nullptr)
-      : PictureWidget(parent),
-        // TODO to google-style constructor
-        cave_color_(Qt::blue) {
-    SetTheme();
-  }
+  CaveWidget(QWidget* parent = nullptr) : PictureWidget(parent) { SetTheme(); }
 
-  void LoadCave(const CaveMatrix& caze);
+  void LoadCave(const CaveMatrix& cave);
 
  private:
   void PaintPicture() override;
@@ -30,7 +25,7 @@ class CaveWidget : public PictureWidget {
   void PaintCaveCell(const CaveCell& cell);
 
   const CaveMatrix* cave_{nullptr};
-  QColor cave_color_;
+  QColor cave_color_{Qt::black};
   bool cave_load_{false};
 };
 

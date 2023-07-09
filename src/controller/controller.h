@@ -22,7 +22,8 @@ class Singleton {
   Singleton& operator=(const Singleton&) = delete;
 };
 
-class Controller : public Singleton<Controller> {
+class Controller : public QObject, public Singleton<Controller> {
+  Q_OBJECT
  public:
   friend class Singleton<Controller>;
 
@@ -36,6 +37,7 @@ class Controller : public Singleton<Controller> {
   void FindPath(Cell start_cell, Cell end_cell);
 
   void LoadCaveFile(const std::string& file_name);
+  void GenerateCave(int rows, int cols, int chance);
   void CaveNextStep(int birth, int death);
 
  private:
