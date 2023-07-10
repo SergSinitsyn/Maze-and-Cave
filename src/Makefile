@@ -23,7 +23,7 @@ NAME					= maze
 SRC_DIR					= ./model/
 SOURCE_FILES			= *.cc
 
-TEST_FILE				= $(NAME)_test
+TEST_FILE				= full_tests
 CAVE_TEST_FILE			= cave_test
 TEST_FILE_COV			= $(NAME)_test_coverage
 TEST_FILE_FOR_LEAKS		= $(NAME)_test_for_leaks
@@ -31,7 +31,7 @@ TEST_FILE_FOR_LEAKS		= $(NAME)_test_for_leaks
 TEST_DIR				= ./tests
 TEST_SOURCE_FILE		= $(TEST_FILE).cc
 
-SOURCE					= $(SRC_DIR)/$(SOURCE_FILES) $(SRC_DIR)/maze/$(SOURCE_FILES)
+SOURCE					= $(SRC_DIR)/$(SOURCE_FILES) $(SRC_DIR)/maze/$(SOURCE_FILES) $(SRC_DIR)/cave/$(SOURCE_FILES) 
 TEST 					= $(TEST_DIR)/$(TEST_SOURCE_FILE)
 OTHER					= ./other/*.cc
 
@@ -51,7 +51,7 @@ clean:
 	$(CLEAN) $(BUILD_DIR)
 	$(CLEAN) $(CAVE_TEST_FILE)
 
-$(TEST_FILE): $(SOURCE) $(TEST) $(OTHER) $(SRC_DIR)/cave/$(SOURCE_FILES) $(SRC_DIR)/$(SOURCE_FILES)
+$(TEST_FILE): $(SOURCE) $(TEST) $(OTHER)
 	$(CLEAN) $(TEST_FILE)
 	$(CC) $(WFLAGS) $(CFLACS) $^ -o $(TEST_FILE) $(CHECKFLAGS)
 

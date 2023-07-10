@@ -33,6 +33,7 @@ TEST(Maze, ReadFile_File_missing) {
     ASSERT_STREQ(expected_error.c_str(), e.what());
   }
 }
+
 TEST(Maze, ReadFile_File_empty) {
   try {
     Maze maze;
@@ -45,9 +46,15 @@ TEST(Maze, ReadFile_File_empty) {
 }
 
 TEST(Maze, ReadFile_bad) {
-  Maze maze;
-  std::string file_name = "maze-samples/maze1x1.mze";
-  ASSERT_ANY_THROW(maze.ReadFile(file_name));
+  try {
+    Maze maze;
+    std::string file_name = "maze-samples/maze1x1.mze";
+    maze.ReadFile(file_name);
+  } catch (const std::invalid_argument& e) {
+    std::string expected_error =
+        "File read error. The dimensions are not correct.";
+    ASSERT_STREQ(expected_error.c_str(), e.what());
+  }
 }
 
 TEST(Maze, ReadFile) {
