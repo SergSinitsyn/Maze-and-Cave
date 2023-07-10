@@ -73,7 +73,7 @@ gcov_report: report/index.html
 install: $(BUILD_DIR)/$(HELP_FILE)
 	cmake -S . -B $(BUILD_DIR) -G "Unix Makefiles"
 	make -C  $(BUILD_DIR)
-	cd $(BUILD_DIR) && rm -rf CMakeFiles cmake_install.cmake CMakeCache.txt Makefile $(NAME)_autogen
+	cd $(BUILD_DIR) && rm -rf CMakeFiles cmake_install.cmake CMakeCache.txt Makefile $(NAME)_autogen Maze_autogen
 	open  $(BUILD_DIR)
 
 uninstall:
