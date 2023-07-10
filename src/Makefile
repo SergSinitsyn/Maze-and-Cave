@@ -35,7 +35,7 @@ SOURCE					= $(SRC_DIR)/$(SOURCE_FILES) $(SRC_DIR)/maze/$(SOURCE_FILES) $(SRC_DI
 TEST 					= $(TEST_DIR)/$(TEST_SOURCE_FILE)
 OTHER					= ./other/*.cc
 
-BUILD_DIR 				= ../build_$(NAME)
+BUILD_DIR 				= ../build
 DOCUMENT_DIR			= ./other
 DOCUMENT				= documentation
 HELP_FILE				= index.html
