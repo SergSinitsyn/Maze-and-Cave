@@ -21,7 +21,6 @@ class CaveWidget : public PictureWidget {
   void PaintPicture() override;
   void DarkTheme() override;
   void LightTheme() override;
-  void PaintCave();
   void PaintCaveCell(const CaveCell& cell);
 
   const CaveMatrix* cave_{nullptr};
