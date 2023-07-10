@@ -37,6 +37,7 @@ void MainWindow::NextStepCave() {
 
 void MainWindow::on_tabWidget_controls_currentChanged(int index) {
   ui_->stackedWidget_picture->setCurrentIndex(index);
+  setWindowTitle(index == 0 ? "Maze" : "Cave");
   ui_->statusbar->clearMessage();
 }
 
