@@ -1,10 +1,9 @@
-#include "../model/maze/maze.h"
-
 #include <gtest/gtest.h>
 
 #include <fstream>
 
 #include "../model/cave/cave.h"
+#include "../model/maze/maze.h"
 
 bool CompareFiles(const std::string& file1, const std::string& file2) {
   std::ifstream stream1(file1);
