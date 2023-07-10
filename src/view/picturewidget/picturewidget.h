@@ -10,12 +10,13 @@ class PictureWidget : public QWidget {
   Q_OBJECT
  public:
   explicit PictureWidget(QWidget* parent = nullptr) : QWidget(parent) {}
+  virtual ~PictureWidget() = 0;
   void set_rows(size_t rows);
   void set_cols(size_t cols);
 
  protected:
   static constexpr double size_{500};
-  
+
   void paintEvent(QPaintEvent* event) override;
   virtual void PaintPicture() = 0;
   void CheckTheme();

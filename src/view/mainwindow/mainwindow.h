@@ -13,14 +13,12 @@ class MainWindow;
 }
 QT_END_NAMESPACE
 
-class Controller;
 class MainWindow : public QMainWindow {
   Q_OBJECT
 
  public:
   MainWindow(QWidget *parent = nullptr);
   ~MainWindow();
-  void SetController(Controller &controller);
 
   void LoadMazeFromModel(MazeMatrix &maze);
   void SetPath(std::vector<Cell> path);
@@ -33,7 +31,7 @@ class MainWindow : public QMainWindow {
 
   // maze
   void on_pushButton_load_maze_file_clicked();
-  void on_pushButton_generate_clicked();
+  void on_pushButton_generate_maze_clicked();
   void on_pushButton_save_maze_clicked();
   void on_pushButton_path_clicked(bool checked);
   void NewStartAndEndCell(Cell start_cell, Cell end_cell);
@@ -49,12 +47,16 @@ class MainWindow : public QMainWindow {
 
  private:
   Ui::MainWindow *ui_;
-  Controller *controller_;
   QTimer *timer_ = new QTimer(this);
 
+ signals:
+  void LoadMazeFile(const std::string &file_name);
+  void GenerateMaze(int rows, int cols);
+  void SaveMazeToFile(const std::string &file_name);
+  void FindPath(Cell start_cell, Cell end_cell);
 
-signals:
-    void generateCaveRequested(int rows, int cols, int chance);
-
+  void LoadCaveFile(const std::string &file_name);
+  void GenerateCave(int rows, int cols, int chance);
+  void CaveNextStep(int birth, int death);
 };
 #endif  // MAZE_VIEW_MAINWINDOW_MAINWINDOW_H_

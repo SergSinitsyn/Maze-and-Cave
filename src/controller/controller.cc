@@ -10,8 +10,16 @@ void Controller::SetModelCave(Cave &model_cave) { model_cave_ = &model_cave; }
 
 void Controller::SetView(MainWindow &view) {
   view_ = &view;
-  view_->SetController(*this);
-  connect(view_, &MainWindow::generateCaveRequested, this, &Controller::GenerateCave);
+
+  connect(view_, &MainWindow::LoadMazeFile, this, &Controller::LoadMazeFile);
+  connect(view_, &MainWindow::GenerateMaze, this, &Controller::GenerateMaze);
+  connect(view_, &MainWindow::SaveMazeToFile, this,
+          &Controller::SaveMazeToFile);
+  connect(view_, &MainWindow::FindPath, this, &Controller::FindPath);
+
+  connect(view_, &MainWindow::LoadCaveFile, this, &Controller::LoadCaveFile);
+  connect(view_, &MainWindow::GenerateCave, this, &Controller::GenerateCave);
+  connect(view_, &MainWindow::CaveNextStep, this, &Controller::CaveNextStep);
 }
 
 void Controller::LoadMazeFile(const std::string &file_name) {
