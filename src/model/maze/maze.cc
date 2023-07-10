@@ -24,34 +24,6 @@ Maze::Maze(size_t rows, size_t cols) : Maze() {
 
 Maze::~Maze() {}
 
-//! Теперь в Model
-// size_t Maze::rows() const { return rows_; }
-// size_t Maze::cols() const { return cols_; }
-
-//! Дублируется с Саве
-/*void Maze::ReadFile(const std::string& filename) {
-  ClearMatrix();
-  std::ifstream file(filename);
-  if (!file) {
-    throw std::invalid_argument("File read error. The file is missing.");
-  }
-  if (file.peek() == std::ifstream::traits_type::eof()) {
-    throw std::invalid_argument("File read error. The file is empty.");
-  }
-  std::string line;
-  std::getline(file, line);
-  ReadSize(line);
-  for (size_t i = 0; i < rows_ * 2; ++i) {
-    std::getline(file, line);
-    if (!line.empty()) {
-      ReadLine(i, line);
-    } else {
-      --i;
-    }
-  }
-  file.close();
-}*/
-
 void Maze::WriteFile(const std::string& filename) {
   std::ofstream file(filename);
   if (!file) throw std::runtime_error("File write error. The file is missing.");
@@ -95,20 +67,6 @@ void Maze::ReadLine(size_t& line_number, const std::string& line) {
     line_index += num_size;
   }
 }
-
-//! Дублируется с Саве
-/*void Maze::ReadSize(const std::string& line) {
-  size_t pos = 0;
-  size_t rows = std::stoi(&line.at(pos), &pos);
-  size_t cols = std::stoi(&line.at(pos));
-  if (rows <= kMinRow || cols <= kMinCol || rows > kMaxRow || cols > kMaxCol) {
-    throw std::invalid_argument(
-        "File read error. The dimensions of the maze are not correct.");
-  }
-  maze_matrix_ = MazeMatrix(rows, cols);
-  rows_ = rows;
-  cols_ = cols;
-}*/
 
 std::vector<Cell> Maze::MakePathVector(
     const std::vector<std::vector<Cell>>& previous, Cell start, Cell end) {

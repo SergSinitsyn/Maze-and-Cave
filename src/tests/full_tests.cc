@@ -45,17 +45,17 @@ TEST(Maze, ReadFile_File_empty) {
   }
 }
 
-// TEST(Maze, ReadFile_bad) {
-//   try {
-//     Maze maze;
-//     std::string file_name = "maze-samples/maze1x1.mze";
-//     maze.ReadFile(file_name);
-//   } catch (const std::invalid_argument& e) {
-//     std::string expected_error =
-//         "File read error. The dimensions are not correct.";
-//     ASSERT_STREQ(expected_error.c_str(), e.what());
-//   }
-// }
+TEST(Maze, ReadFile_bad) {
+  try {
+    Maze maze;
+    std::string file_name = "maze-samples/maze1x1.mze";
+    maze.ReadFile(file_name);
+  } catch (const std::invalid_argument& e) {
+    std::string expected_error =
+        "File read error. The dimensions are not correct.";
+    ASSERT_STREQ(expected_error.c_str(), e.what());
+  }
+}
 
 TEST(Maze, ReadFile) {
   Maze maze;
