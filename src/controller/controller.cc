@@ -11,7 +11,8 @@ void Controller::SetModelCave(Cave &model_cave) { model_cave_ = &model_cave; }
 void Controller::SetView(MainWindow &view) {
   view_ = &view;
   view_->SetController(*this);
-  connect(view_, &MainWindow::generateCaveRequested, this, &Controller::GenerateCave);
+  connect(view_, &MainWindow::generateCaveRequested, this,
+          &Controller::GenerateCave);
 }
 
 void Controller::LoadMazeFile(const std::string &file_name) {

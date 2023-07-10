@@ -15,7 +15,7 @@ class PictureWidget : public QWidget {
 
  protected:
   static constexpr double size_{500};
-  
+
   void paintEvent(QPaintEvent* event) override;
   virtual void PaintPicture() = 0;
   void CheckTheme();

@@ -52,9 +52,7 @@ class MainWindow : public QMainWindow {
   Controller *controller_;
   QTimer *timer_ = new QTimer(this);
 
-
-signals:
-    void generateCaveRequested(int rows, int cols, int chance);
-
+ signals:
+  void generateCaveRequested(int rows, int cols, int chance);
 };
 #endif  // MAZE_VIEW_MAINWINDOW_MAINWINDOW_H_
