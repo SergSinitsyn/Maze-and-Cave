@@ -4,6 +4,8 @@
 
 #include "../../other/cell.h"
 
+PictureWidget::~PictureWidget() {}
+
 void PictureWidget::set_rows(size_t rows) {
   rows_ = rows;
   cell_size_.setHeight(size_ / rows_);
@@ -15,6 +17,7 @@ void PictureWidget::set_cols(size_t cols) {
 
 void PictureWidget::paintEvent(QPaintEvent* event) {
   painter_.begin(this);
+  CheckTheme();
   PaintPicture();
   painter_.end();
 }

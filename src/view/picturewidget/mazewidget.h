@@ -37,7 +37,6 @@ class MazeWidget : public PictureWidget {
   void PaintPicture() override;
   void DarkTheme() override;
   void LightTheme() override;
-  void PaintMaze();
   void PaintFrame();
   void PaintWalls();
   void PaintMazeCell(const MazeCell& cell);

@@ -75,6 +75,20 @@
      <layout class="QVBoxLayout" name="verticalLayout">
       <item>
        <widget class="QTabWidget" name="tabWidget_controls">
+        <property name="font">
+         <font>
+          <pointsize>13</pointsize>
+         </font>
+        </property>
+        <property name="focusPolicy">
+         <enum>Qt::WheelFocus</enum>
+        </property>
+        <property name="layoutDirection">
+         <enum>Qt::LeftToRight</enum>
+        </property>
+        <property name="autoFillBackground">
+         <bool>false</bool>
+        </property>
         <property name="tabPosition">
          <enum>QTabWidget::North</enum>
         </property>
@@ -82,13 +96,19 @@
          <enum>QTabWidget::Rounded</enum>
         </property>
         <property name="currentIndex">
-         <number>0</number>
+         <number>1</number>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>16</width>
+          <height>16</height>
+         </size>
         </property>
         <property name="elideMode">
          <enum>Qt::ElideRight</enum>
         </property>
         <property name="usesScrollButtons">
-         <bool>false</bool>
+         <bool>true</bool>
         </property>
         <property name="documentMode">
          <bool>false</bool>
@@ -141,7 +161,7 @@
              <string>Load Maze</string>
             </property>
             <property name="shortcut">
-             <string>Ctrl+L</string>
+             <string>L</string>
             </property>
            </widget>
           </item>
@@ -248,12 +268,12 @@
            </layout>
           </item>
           <item>
-           <widget class="QPushButton" name="pushButton_generate">
+           <widget class="QPushButton" name="pushButton_generate_maze">
             <property name="text">
              <string>Generate Maze</string>
             </property>
             <property name="shortcut">
-             <string>Return</string>
+             <string>G</string>
             </property>
            </widget>
           </item>
@@ -273,7 +293,7 @@
              <string>Path Disable</string>
             </property>
             <property name="shortcut">
-             <string>Ctrl+P</string>
+             <string>P</string>
             </property>
             <property name="checkable">
              <bool>true</bool>
@@ -289,7 +309,7 @@
              <string>Save Maze</string>
             </property>
             <property name="shortcut">
-             <string>Ctrl+S</string>
+             <string>S</string>
             </property>
            </widget>
           </item>
@@ -343,11 +363,14 @@
           </item>
           <item>
            <widget class="QPushButton" name="pushButton_load_cave_file">
+            <property name="focusPolicy">
+             <enum>Qt::TabFocus</enum>
+            </property>
             <property name="text">
              <string>Load Cave</string>
             </property>
             <property name="shortcut">
-             <string>Ctrl+L</string>
+             <string>L</string>
             </property>
            </widget>
           </item>
@@ -402,6 +425,9 @@
                 <height>20</height>
                </size>
               </property>
+              <property name="focusPolicy">
+               <enum>Qt::WheelFocus</enum>
+              </property>
               <property name="buttonSymbols">
                <enum>QAbstractSpinBox::UpDownArrows</enum>
               </property>
@@ -440,6 +466,9 @@
                 <height>20</height>
                </size>
               </property>
+              <property name="focusPolicy">
+               <enum>Qt::WheelFocus</enum>
+              </property>
               <property name="accelerated">
                <bool>true</bool>
               </property>
@@ -465,6 +494,9 @@
              <layout class="QHBoxLayout" name="horizontalLayout_9">
               <item>
                <widget class="QSpinBox" name="spinBox_cave_chance">
+                <property name="focusPolicy">
+                 <enum>Qt::WheelFocus</enum>
+                </property>
                 <property name="accelerated">
                  <bool>true</bool>
                 </property>
@@ -505,7 +537,7 @@
              <string>Generate Cave</string>
             </property>
             <property name="shortcut">
-             <string>Ctrl+G</string>
+             <string>G</string>
             </property>
            </widget>
           </item>
@@ -520,6 +552,15 @@
            <layout class="QFormLayout" name="formLayout_3">
             <item row="0" column="0">
              <widget class="QLabel" name="label_birth">
+              <property name="toolTip">
+               <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;If &amp;quot;dead&amp;quot; cell are surrounded by &amp;quot;live&amp;quot; cells, the number of which is greater than the &amp;quot;birth&amp;quot; limit, it become &amp;quot;live&amp;quot;.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+              </property>
+              <property name="toolTipDuration">
+               <number>10000</number>
+              </property>
+              <property name="whatsThis">
+               <string/>
+              </property>
               <property name="text">
                <string>Birth limit</string>
               </property>
@@ -558,6 +599,12 @@
             </item>
             <item row="1" column="0">
              <widget class="QLabel" name="label_death">
+              <property name="toolTip">
+               <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;If &amp;quot;live&amp;quot; cell is surrounded by &amp;quot;live&amp;quot; cells, the number of which is less than the &amp;quot;death&amp;quot; limit, it become &amp;quot;die&amp;quot;.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+              </property>
+              <property name="toolTipDuration">
+               <number>10000</number>
+              </property>
               <property name="text">
                <string>Death limit</string>
               </property>
@@ -633,7 +680,7 @@
              <string>Next Step</string>
             </property>
             <property name="shortcut">
-             <string>Return</string>
+             <string>N</string>
             </property>
             <property name="autoRepeat">
              <bool>true</bool>
@@ -681,8 +728,14 @@
             </property>
             <item>
              <widget class="QLabel" name="label_4">
+              <property name="layoutDirection">
+               <enum>Qt::RightToLeft</enum>
+              </property>
               <property name="text">
                <string>Periodicity</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
               </property>
              </widget>
             </item>
@@ -690,6 +743,12 @@
              <widget class="QSpinBox" name="spinBox_periodicity">
               <property name="enabled">
                <bool>false</bool>
+              </property>
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
               </property>
               <property name="minimumSize">
                <size>
@@ -735,7 +794,7 @@
              <string>Automatic Work</string>
             </property>
             <property name="shortcut">
-             <string>Ctrl+R</string>
+             <string>A</string>
             </property>
             <property name="checkable">
              <bool>true</bool>
@@ -794,7 +853,7 @@
   <tabstop>pushButton_load_maze_file</tabstop>
   <tabstop>spinBox_maze_rows</tabstop>
   <tabstop>spinBox_maze_cols</tabstop>
-  <tabstop>pushButton_generate</tabstop>
+  <tabstop>pushButton_generate_maze</tabstop>
   <tabstop>pushButton_path</tabstop>
   <tabstop>pushButton_save_maze</tabstop>
   <tabstop>pushButton_load_cave_file</tabstop>

@@ -1,6 +1,5 @@
 #include "mainwindow.h"
 
-#include "../../controller/controller.h"
 #include "../picturewidget/cavewidget.h"
 #include "../picturewidget/mazewidget.h"
 #include "./ui_mainwindow.h"
@@ -9,20 +8,15 @@ MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent), ui_(new Ui::MainWindow) {
   ui_->setupUi(this);
   adjustSize();
+  setFixedSize(size());
   connect(ui_->maze_widget, &MazeWidget::UpdateStartAndEndCell, this,
           &MainWindow::NewStartAndEndCell);
   connect(timer_, &QTimer::timeout, this, &MainWindow::NextStepCave);
-  connect(ui_->pushButton_generate_cave, &QPushButton::clicked, this,
-          &MainWindow::on_pushButton_generate_cave_clicked);
   ui_->tabWidget_controls->setCurrentIndex(0);
   ui_->stackedWidget_picture->setCurrentIndex(0);
 }
 
 MainWindow::~MainWindow() { delete ui_; }
-
-void MainWindow::SetController(Controller &controller) {
-  controller_ = &controller;
-}
 
 void MainWindow::LoadMazeFromModel(MazeMatrix &maze) {
   ui_->maze_widget->LoadMaze(maze);
@@ -37,8 +31,8 @@ void MainWindow::LoadCaveFromModel(const CaveMatrix &cave) {
 }
 
 void MainWindow::NextStepCave() {
-  controller_->CaveNextStep(ui_->spinBox_birth_limit->value(),
-                            ui_->spinBox_death_limit->value());
+  emit CaveNextStep(ui_->spinBox_birth_limit->value(),
+                    ui_->spinBox_death_limit->value());
 }
 
 void MainWindow::on_tabWidget_controls_currentChanged(int index) {
@@ -55,8 +49,7 @@ void MainWindow::on_pushButton_load_maze_file_clicked() {
     return;
   }
   try {
-    controller_->LoadMazeFile(
-        new_filename.toStdString());  // ! сделать в виде сигнала в контроллер?
+    emit LoadMazeFile(new_filename.toStdString());
     ui_->statusbar->showMessage("Correct load");
     UnblockControlsAfterMazeLoad();
   } catch (const std::exception &exc) {
@@ -66,23 +59,28 @@ void MainWindow::on_pushButton_load_maze_file_clicked() {
   }
 }
 
-void MainWindow::on_pushButton_generate_clicked() {
-  controller_->GenerateMaze(
-      ui_->spinBox_maze_rows
-          ->value(),  // ! сделать в виде сигнала в контроллер?
-      ui_->spinBox_maze_cols->value());
+void MainWindow::on_pushButton_generate_maze_clicked() {
+  emit GenerateMaze(ui_->spinBox_maze_rows->value(),
+                    ui_->spinBox_maze_cols->value());
   UnblockControlsAfterMazeLoad();
 }
 
 void MainWindow::on_pushButton_save_maze_clicked() {
+  ui_->statusbar->showMessage("Saving file...");
   QDir::currentPath();
   QString new_filename = QFileDialog::getSaveFileName(0, "Save", "", "*.mze");
   if (new_filename.isEmpty()) {
     ui_->statusbar->showMessage("Filename not selected");
     return;
   }
-  controller_->SaveMazeToFile(new_filename.toStdString());
-  //! а если память кончилась?
+  try {
+    emit SaveMazeToFile(new_filename.toStdString());
+    ui_->statusbar->showMessage("Correct save");
+  } catch (const std::exception &exc) {
+    QMessageBox::critical(this, "Warning", exc.what());
+    ui_->statusbar->showMessage("Error saving file: '" + new_filename + "'" +
+                                ", error:" + exc.what());
+  }
 }
 
 void MainWindow::on_pushButton_path_clicked(bool checked) {
@@ -91,7 +89,7 @@ void MainWindow::on_pushButton_path_clicked(bool checked) {
 }
 
 void MainWindow::NewStartAndEndCell(Cell start_cell, Cell end_cell) {
-  controller_->FindPath(start_cell, end_cell);
+  emit FindPath(start_cell, end_cell);
   ui_->statusbar->showMessage(
       "Start cell is " + QString::number(start_cell.row() + 1) + "," +
       QString::number(start_cell.col() + 1) + "    ###    " + "End cell is " +
@@ -105,7 +103,6 @@ void MainWindow::UnblockControlsAfterMazeLoad() {
 }
 
 void MainWindow::on_pushButton_load_cave_file_clicked() {
-  // TODO убрать дублирование кода
   ui_->statusbar->showMessage("Loading file...");
   QDir::currentPath();
   QString new_filename = QFileDialog::getOpenFileName(0, "Open", "", "*.cve");
@@ -114,10 +111,9 @@ void MainWindow::on_pushButton_load_cave_file_clicked() {
     return;
   }
   try {
-    controller_->LoadCaveFile(
-        new_filename.toStdString());  // ! сделать в виде сигнала в контроллер?
+    emit LoadCaveFile(new_filename.toStdString());
     ui_->statusbar->showMessage("Correct load");
-    UnblockControlsAfterCaveLoad();  // !
+    UnblockControlsAfterCaveLoad();
   } catch (const std::exception &exc) {
     QMessageBox::critical(this, "Warning", exc.what());
     ui_->statusbar->showMessage("Error loading file: '" + new_filename + "'" +
@@ -125,17 +121,10 @@ void MainWindow::on_pushButton_load_cave_file_clicked() {
   }
 }
 
-// void MainWindow::on_pushButton_generate_cave_clicked() {
-//   controller_->GenerateCave(ui_->spinBox_cave_rows->value(),
-//                             ui_->spinBox_cave_cols->value(),
-//                             ui_->spinBox_cave_chance->value());
-//   UnblockControlsAfterCaveLoad();
-// }
-
 void MainWindow::on_pushButton_generate_cave_clicked() {
-  emit generateCaveRequested(ui_->spinBox_cave_rows->value(),
-                             ui_->spinBox_cave_cols->value(),
-                             ui_->spinBox_cave_chance->value());
+  emit GenerateCave(ui_->spinBox_cave_rows->value(),
+                    ui_->spinBox_cave_cols->value(),
+                    ui_->spinBox_cave_chance->value());
   UnblockControlsAfterCaveLoad();
 }
 

@@ -47,15 +47,8 @@ void MazeWidget::mouseMoveEvent(QMouseEvent* event) {
   UpdateStartAndEnd(event);
 }
 
-void MazeWidget::PaintPicture() { PaintMaze(); }
-
-void MazeWidget::DarkTheme() { wall_line_.setColor(Qt::white); }
-
-void MazeWidget::LightTheme() { wall_line_.setColor(Qt::black); }
-
-void MazeWidget::PaintMaze() {
+void MazeWidget::PaintPicture() {
   if (maze_.empty()) return;
-  CheckTheme();
   PaintFrame();
   PaintWalls();
   if (enable_path_) {
@@ -63,6 +56,10 @@ void MazeWidget::PaintMaze() {
     PaintStartAndEnd();
   }
 }
+
+void MazeWidget::DarkTheme() { wall_line_.setColor(Qt::white); }
+
+void MazeWidget::LightTheme() { wall_line_.setColor(Qt::black); }
 
 void MazeWidget::PaintFrame() {
   painter_.setPen(wall_line_);

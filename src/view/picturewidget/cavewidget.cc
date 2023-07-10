@@ -20,12 +20,9 @@ void CaveWidget::DarkTheme() { cave_color_ = Qt::white; }
 
 void CaveWidget::LightTheme() { cave_color_ = Qt::black; }
 
-void CaveWidget::PaintPicture() { PaintCave(); }
-
-void CaveWidget::PaintCave() {
+void CaveWidget::PaintPicture() {
   if (!cave_load_) return;
   if (cave_->empty()) return;
-  CheckTheme();
   for (const auto& row : *cave_)
     for (const auto& cell : row) PaintCaveCell(cell);
 }
