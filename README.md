@@ -69,7 +69,7 @@ To build and install this project, please follow the instructions below:
 
 - [Sergey Sinitsyn](https://github.com/SergSinitsyn) (aka Bernarda Verla): GUI
 - [Sergey Gorbatenko](https://github.com/sg41) (aka Joelle Bonza): Cave logic, Maze path finding
-- [Aleksandr Didenko](https://github.com/quincshe) (aka Quinc Sherley):  - Maze lgic
+- [Aleksandr Didenko](https://github.com/quincshe) (aka Quinc Sherley): Maze logic
 
 ## License
 
